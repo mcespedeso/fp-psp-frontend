@@ -46,6 +46,8 @@ export default Mn.View.extend({
         // obj2 = title
         if (_.isObject(obj2) && obj2.hasOwnProperty('es')) {
           return obj2.es;
+        }else  if (_.isObject(obj2) && obj2.hasOwnProperty('en'))  {
+          return obj2.en;
         }
         return obj2;
       });
@@ -99,7 +101,7 @@ export default Mn.View.extend({
       var self = this;
       var galleryFields = [];
       var customFields = this.surveyModel.attributes.survey_ui_schema['ui:custom:fields'];
-      
+
       $.each(customFields, function(i, item) {
         if(item['ui:field'] && item['ui:field']==='gallery'){
           var itemSelected = formData[i];
@@ -129,7 +131,7 @@ export default Mn.View.extend({
     };
 
     new SnapshotModel().save(snapshot).then(snapshot => {
-      Bn.history.navigate(`/survey/${snapshot.survey_id}/snapshot/${snapshot.snapshot_economic_id}`, true);      
+      Bn.history.navigate(`/survey/${snapshot.survey_id}/snapshot/${snapshot.snapshot_economic_id}`, true);
     });
   }
 });
