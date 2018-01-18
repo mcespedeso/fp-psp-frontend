@@ -17,7 +17,7 @@ export default Mn.View.extend({
   events: {
     'click #circle': 'handlerOnClickIndicator',
     'click #delete': 'handleOnDeletePriority',
-    'click #finish-snapshot': 'handleShowFamilyMap',
+    'click #finish-snapshot': 'finishSurvey',
     'click #print': 'printSnapshot'
   },
 
@@ -26,7 +26,6 @@ export default Mn.View.extend({
     this.model = this.props.model;
     this.app = this.props.app;
     this.model.on('sync', this.render);
-
   },
 
   serializeData() {
@@ -166,10 +165,9 @@ export default Mn.View.extend({
     $('#modal-region').append(this.priorityDialog.render().el);
   },
 
-  handleShowFamilyMap(e) {
-    e.preventDefault();
-
-    if(this.model.attributes.indicators_priorities.length<1){
+  handleShowFamilyMap() {
+ 
+    if(this.model.attributes.indicators_priorities.length<1 && (this.model.attributes.count_red_indicators>0 || this.model.attributes.count_yellow_indicators>0)){
       
       ModalService.request('confirm', {
         title: 'Information',
@@ -178,15 +176,22 @@ export default Mn.View.extend({
         if (!confirmed) {
           return;
         }
-        this.finishSurvey();
+        this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
+          this.props.model.attributes.snapshot_economic_id
+        }`);
       });
 
     } else {
-      this.finishSurvey();
+      this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
+        this.props.model.attributes.snapshot_economic_id
+      }`);
     }
   },
 
-  finishSurvey(){
+  finishSurvey(e){
+
+    e.preventDefault();
+
     if($('#check-privacity').is(':checked')) {
       ModalService.request('confirm', {
         title: 'Information',
@@ -204,9 +209,8 @@ export default Mn.View.extend({
 
       });
     } else {
-      this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
-           this.props.model.attributes.snapshot_economic_id
-         }`)
+      this.handleShowFamilyMap();
+     
     }
   },
 

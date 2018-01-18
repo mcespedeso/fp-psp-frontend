@@ -6,7 +6,7 @@ var SnapshotItemStorage = Storage.extend({
       return {
         mainItem: {
           name: `Select your priorities`,
-          link: `/#survey/${model.survey_id}/snapshot/${model.snapshot_economic_id}`
+          link: `/#survey/${model.attributes.survey_id}/snapshot/${model.attributes.snapshot_economic_id}`
         }
       };
     }

@@ -79,7 +79,7 @@ class Gmap extends React.Component {
             lat={this.state.center.lat}
             lng={this.state.center.lng}
             zoom={this.state.zoom}
-            loadingMessage="Cargando..."
+            loadingMessage="Loading..."
             params={params}
             onMapCreated={this.onMapCreated}
             onClick={this.onClick()}

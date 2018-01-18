@@ -21,7 +21,8 @@ class Gallery extends React.Component {
       isGoing: '',
       images: props.schema.items.enum,
       title: props.schema.title,
-      required: props.required ? '*' : ''
+      required: props.required ? '*' : '', 
+      loading: true
     };
   }
 
@@ -58,14 +59,13 @@ class Gallery extends React.Component {
         images: nextProps.schema.items.enum,
         title: nextProps.schema.title,
         required: nextProps.required ? '*' : '',
-        isGoing: ban
+        isGoing: ban,
+        loading: true
       });
     }
   }
 
-
-  render() {
-
+  imagesWillRender(){
     let images = [];
     for (let i = 0; i < this.state.images.length; i++) {
       let url = this.state.images[i].url;
@@ -74,7 +74,21 @@ class Gallery extends React.Component {
       let clazz = url === this.state.selected ? 'gallery-selected' : '';
       clazz += ' gallery-image gallery-image-div ';
       images.push(this.renderImage(url, description, value, i, clazz));
+    }
+    return images;
+  }
 
+  render() {
+    const { loading } = this.state;
+    
+    let images = [];
+    if(loading) { 
+      setTimeout(() => this.setState({ loading: false }), 200);
+      for (let i = 0; i < this.state.images.length-1; i++) {
+        images.push(this.renderImage('../../static/images/image_default.png', 'Loading...', 'NONE', i, 'gallery-image gallery-image-div' ));
+      }
+    } else {
+      images = this.imagesWillRender();
     }
 
     return (

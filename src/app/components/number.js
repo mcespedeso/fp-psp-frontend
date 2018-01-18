@@ -79,21 +79,36 @@ class NumberFormat extends React.Component {
         } else {
           value = props.formData;
         }
-        
-  
         this.state = {
-          name: props.name,
           title: props.schema.title,
           required: props.required ? '*' : '',
           valueView: this.prettyNumber(value.toString(), this.parseNumber(value.toString()))
         };
     }
 
-    render() {
-        
-        if (this.props.name !== this.state.name) {
-          this.setInitialValues(this.props);
+    componentWillReceiveProps(nextProps) {
+
+        if (this.props.name !== nextProps.name) {
+            let value = 0;
+            if (nextProps.schema && nextProps.schema.default) {
+                value = nextProps.schema.default;
+            }else if(nextProps.formData===undefined || nextProps.formData.length===0){
+                value = 0;
+                setImmediate(() =>
+                    nextProps.onChange(0)
+                );
+            } else {
+                value = nextProps.formData;
+            }
+            this.setState ({
+                title: nextProps.schema.title,
+                required: nextProps.required ? '*' : '',
+                valueView: this.prettyNumber(value.toString(), this.parseNumber(value.toString()))
+            });
         }
+    }
+
+    render() {
 
         return (
           <div className="form-group field field-number">
