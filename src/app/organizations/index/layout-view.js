@@ -58,11 +58,13 @@ export default Mn.View.extend({
     setTimeout(() => {
 
       let params = {};
-      params.applicationId = self.app.getSession().get('user').application.id;
+      if(self.app.getSession().get('user').application !== null){
+        params.applicationId = self.app.getSession().get('user').application.id;
+      }
       if(self.app.getSession().get('user').organization !== null){
         params.organizationId = self.app.getSession().get('user').organization.id
       }
-      
+
 
       let moreElements = new OrganizationsCollection();
       moreElements.fetch({
@@ -104,6 +106,7 @@ export default Mn.View.extend({
 
     // if not all organizations have been loaded
     if (self.model.get('currentPage') < self.model.get('totalPages')) {
+
       let params = {
         page: self.model.get('currentPage') + 1,
         per_page: 12,
