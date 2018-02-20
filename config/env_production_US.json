@@ -2,5 +2,6 @@
   "API": "https://testing.backend.povertystoplight.org/api/v1",
   "API_AUTH": "https://testing.backend.povertystoplight.org/oauth",
   "authenticationEnabled": true,
-  "GOOGLEKEY": "AIzaSyAOJGqHfbWY_u7XhRnLi7EbVjdK-osBgAM"
+  "GOOGLEKEY": "AIzaSyAOJGqHfbWY_u7XhRnLi7EbVjdK-osBgAM",
+  "API_PUBLIC": "https://testing.backend.povertystoplight.org"
 }
