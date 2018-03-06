@@ -3,18 +3,18 @@
   <article class="card">
     <div class="card-block">
       <div class="row card-title">
-        <p class="text-left text-blue">{{user.username}}</p>
+        <p class="text-left text-blue" title="{{{user.username}}}">{{user.username}}</p>
       </div>
       <a class="answer-area" href="#users/{{user.userId}}">
         <div class="row card-description">
           <h6 class="card-text-sub-title text-blue">{{$t 'user.card.email'}}:</h6>
           {{#if user.email}}
-            <p class="card-text">{{user.email}}</p>
+            <p class="card-text" title={{{user.email}}}>{{user.email}}</p>
           {{else}}
             <p class="card-text">&nbsp</p>
           {{/if}}
           <h6 class="card-text-sub-title text-blue">{{organizationLabel}}:</h6>
-          <p class="card-text">{{organization.name}}</p>
+          <p class="card-text" title={{{organization.name}}}>{{organization.name}}</p>
           <p class="card-text-small">
             <span class="text-blue">&nbsp</span>
           </p>

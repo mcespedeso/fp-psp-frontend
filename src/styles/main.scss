@@ -413,6 +413,9 @@ div.fp-form-container {
   font-weight: 400;
   margin-bottom: 10px;
   margin-top: 10px;
+  overflow: hidden; /* Escondemos la parte sobrante */
+  white-space: nowrap; /* Indicamos que no realice salto de linea si no cabe en la anchura indicada */
+  text-overflow: ellipsis; /* Ponemos los dos puntos */
 }
 .card-description {
   padding-top: 10px;
@@ -421,7 +424,11 @@ div.fp-form-container {
 .card-text {
   font-size: 12px !important;
   margin-bottom: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
+
 .card-text-small,
 .card-text-small span {
   font-size: 10px !important;
