@@ -220,7 +220,11 @@
     "email": "Correo electrónico",
     "reset-pass": "Cambiar Contraseña",
     "back-login": "Volver al inicio de sesión",
-    "reset-title": "Por favor ingrese su correo electrónico para cambiar su contraseña"
+    "reset-title": "Por favor ingrese su correo electrónico para cambiar su contraseña",
+    "server-connection-error": "Sin conexión con el servidor",
+    "server-unauthorized-error": "No autorizado",
+    "server-wrong-credentials": "Credenciales incorrectas. Inténtalo de nuevo",
+    "mail-reset-success": "¡Gracias! Le hemos enviado un correo a: '\"%{email}\"' para restablecer su contraseña"
   },
   "hub": {
     "search": {

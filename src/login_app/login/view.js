@@ -18,7 +18,6 @@ export default Mn.View.extend({
     'click #link-email': 'entryEmail',
     'click #back-login': 'backLogin',
     'click #btn-recovery': 'sendEmail'
-
   },
 
   initialize(options) {
@@ -56,6 +55,9 @@ export default Mn.View.extend({
   },
 
   doLogin(event) {
+
+    let self = this;
+
     event.preventDefault();
 
     const loginBtn = this.$el.find('#btn-login');
@@ -94,26 +96,13 @@ export default Mn.View.extend({
       },
       error(xmlHttpRequest, textStatus) {
         if (xmlHttpRequest && xmlHttpRequest.status === 0) {
-          FlashesService.request('add', {
-            timeout: 2000,
-            type: 'danger',
-            title: 'No connection to server'
-          });
+          self.showError("danger", t('login.server-connection-error'));
           return;
         }
         if (textStatus === 'Unauthorized') {
-          FlashesService.request('add', {
-            timeout: 2000,
-            type: 'warning',
-            title: 'Not authorized'
-          });
+          self.showError("warning", t('login.server-unauthorized-error'));
         } else {
-          console.log(textStatus);
-          FlashesService.request('add', {
-            type: 'warning',
-            title: 'Wrong credentials. Please try again.',
-            timeout: 2000
-          });
+          self.showError("warning", t('login.server-wrong-credentials'));
           $('#login-username').val('');
           $('#login-password').val('');
           $('#login-username').focus();
@@ -142,38 +131,21 @@ export default Mn.View.extend({
       url,
       type: 'POST',
       success() {
-          FlashesService.request('add', {
-            timeout: 6000,
-            type: 'info',
-            title: `Thanks! Please check ${email} for a link to reset your password`
-          });
-
+          self.showError("success", t('mail-reset-success', {email}));
           self.backLogin();
       },
       error(xmlHttpRequest, statusText) {
-        if (xmlHttpRequest && xmlHttpRequest.status === 0) {
-          FlashesService.request('add', {
-            timeout: 4000,
-            type: 'danger',
-            title: 'No connection to server'
-          });
+        if (xmlHttpRequest && xmlHttpRequest.status === 0) {          
+          self.showError("danger", t('login.server-connection-error'));
           return;
         }
 
         if (statusText === 'Unauthorized') {
-          FlashesService.request('add', {
-            timeout: 3000,
-            type: 'warning',
-            title: 'Not authorized'
-          });
+          self.showError("warning", t('login.server-unauthorized-error'));
         } else {
           let jsonResponse = JSON.parse(xmlHttpRequest.responseText);
           let message = jsonResponse.message;
-          FlashesService.request('add', {
-            type: 'warning',
-            title: message,
-            timeout: 3000
-          });
+          self.showError("warning", message);
         }
       },
       complete: () => {
@@ -181,5 +153,14 @@ export default Mn.View.extend({
         button.reset();
       }
     });
+  },
+
+  showError(type, message){    
+    $(`#login-alert-${type}`).css("display","block");
+    $(`#login-alert-${type}`).text(message);
+    $(`#login-alert-${type}`).fadeTo(2500, 500).slideUp(500, () =>{
+      $(`#login-alert-${type}`).css("display","none");
+    });
   }
+
 });

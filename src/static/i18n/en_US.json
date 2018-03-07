@@ -219,7 +219,11 @@
     "email": "Email",
     "reset-pass": "Reset Password",
     "back-login": "Back to login",
-    "reset-title": "Please enter your email to reset your password"
+    "reset-title": "Please enter your email to reset your password",
+    "server-error-conn": "No connection to server",
+    "server-unauthorized-error": "Not authorized",
+    "server-wrong-credentials": "Wrong credentials. Please try again.",
+    "mail-reset-success": "Thanks! Please check '\"%{email}\"' for a link to reset your password"
   },
   "hub": {
     "search": {
