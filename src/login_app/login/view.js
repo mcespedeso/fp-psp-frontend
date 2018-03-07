@@ -155,12 +155,20 @@ export default Mn.View.extend({
     });
   },
 
-  showError(type, message){    
-    $(`#login-alert-${type}`).css("display","block");
-    $(`#login-alert-${type}`).text(message);
-    $(`#login-alert-${type}`).fadeTo(2500, 500).slideUp(500, () =>{
-      $(`#login-alert-${type}`).css("display","none");
-    });
+  // showError(type, message){    
+  //   $(`#login-alert-${type}`).css("display","block");
+  //   $(`#login-alert-${type}`).text(message);
+  //   $(`#login-alert-${type}`).fadeTo(2500, 500).slideUp(500, () =>{
+  //     $(`#login-alert-${type}`).css("display","none");
+  //   });
+  // },
+
+  showError(type, message) {
+    $(`#login-alert`)
+      .attr('class', `alert alert-${type}`)
+      .text(message)
+      .show()
+      .fadeTo(2500, 500).slideUp(500, () => $(`#login-alert`).hide());
   }
 
 });
