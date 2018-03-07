@@ -94,8 +94,8 @@ export default Mn.View.extend({
   },
   loadSelect(list, selectId, placeholder, type, fieldDisplayed) {
     $(`${selectId}`).show();
-    $(`${selectId}-placeholder`).text(placeholder);
-    $(selectId).val(placeholder);
+    $(`${selectId}-placeholder`).text(`* ${placeholder}`);
+    $(selectId).val(`* ${placeholder}`);
     $(selectId)
       .find('option:not(:first)')
       .remove();

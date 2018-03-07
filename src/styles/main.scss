@@ -1064,6 +1064,16 @@ table.dataTable.no-footer {
     scroll 0px 0px;
   background-size: 45px;
 }
+.floating-user {
+  background: url('/static/images/icon_agregar_usuario.png') no-repeat scroll
+    0px 0px;
+  background-size: 45px;
+}
+.floating-user:hover {
+  background: url('/static/images/icon_agregar_usuario_hover.png') no-repeat
+    scroll 0px 0px;
+  background-size: 45px;
+}
 .floating-surveys {
   background: url('/static/images/icon_agregar_encuesta.png') no-repeat scroll
     0px 0px;

@@ -27,19 +27,16 @@
           <div class="col-md-8 col-md-offset-2">
             <div class="fp-form-container padding-b-30px" id="add-application">
               <form data-toggle="validator" role="form" class="form-vertical" id="form">
-                <div class="alert alert-warning" style="display:none">
-                  <strong>Attention! All the fields with * are mandatory</strong>
-                </div>
                 <div class="form-group">
-                  <input value="{{application.name}}" type="text" name="name" value="" placeholder="{{$t 'hub.form.name'}}"
+                  <input value="{{application.name}}" type="text" name="name" value="" placeholder="* {{$t 'hub.form.name'}}"
                          class="input-bg-gray form-control" required>
                 </div>
                 <div class="form-group">
-                  <input value="{{application.code}}" type="text" name="code" placeholder="{{$t 'hub.form.code'}}"
+                  <input value="{{application.code}}" type="text" name="code" placeholder="* {{$t 'hub.form.code'}}"
                          class="input-bg-gray form-control" required>
                 </div>
                 <div class="form-group">
-                  <input value="{{application.description}}" type="text" name="description" placeholder="{{$t 'hub.form.description'}}"
+                  <input value="{{application.description}}" type="text" name="description" placeholder="* {{$t 'hub.form.description'}}"
                          class="input-bg-gray form-control" required>
                 </div>
                 <div class="form-group">
