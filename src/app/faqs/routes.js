@@ -7,9 +7,7 @@ const faq = props => {
       faqs: 'showFaqs'
     },
     controller: {
-      showFaqs() {
-        app.showHomeForUser(new View({}));
-      }
+      showFaqs() {app.showViewOnRoute(new View({}));}
     }
   };
   return routes;
