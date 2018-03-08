@@ -131,7 +131,7 @@ export default Mn.View.extend({
       url,
       type: 'POST',
       success() {
-          self.showError("success", t('mail-reset-success', {email}));
+          self.showError("success", t('login.mail-reset-success', {email}));
           self.backLogin();
       },
       error(xmlHttpRequest, statusText) {
@@ -154,14 +154,6 @@ export default Mn.View.extend({
       }
     });
   },
-
-  // showError(type, message){    
-  //   $(`#login-alert-${type}`).css("display","block");
-  //   $(`#login-alert-${type}`).text(message);
-  //   $(`#login-alert-${type}`).fadeTo(2500, 500).slideUp(500, () =>{
-  //     $(`#login-alert-${type}`).css("display","none");
-  //   });
-  // },
 
   showError(type, message) {
     $(`#login-alert`)
