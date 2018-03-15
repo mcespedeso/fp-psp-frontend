@@ -216,6 +216,7 @@ export default Mn.View.extend({
             `/surveys`,
             true
           );
+          this.model.fetch();
         },
         error => {
           FlashesService.request('add', {
