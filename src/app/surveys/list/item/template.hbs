@@ -9,8 +9,8 @@
         <div class="row card-description">
           <p class="card-text">{{survey.description}}</p>
           <h5 class="card-text-sub-title text-blue">{{$t 'survey.contains'}}:</h5>
-          <p class="card-text">50 {{$t 'survey.indicators'}}</p>
-          <p class="card-text-small"><span class="text-blue">{{$t 'survey.created'}}: </span><span>{{surveys.created_at}}</span></p>
+          <p class="card-text">{{count_indicators}} {{$t 'survey.indicators'}}</p>
+          <p class="card-text-small"><span class="text-blue">{{$t 'survey.created'}}: </span><span>{{survey.created_at}}</span></p>
         </div>
       </a>
       <div class="row card-menu">

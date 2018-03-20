@@ -22,8 +22,14 @@ export default Mn.View.extend({
 
   serializeData() {
     return {
-      survey: this.model.attributes
+      survey: this.model.attributes,
+      count_indicators: this.countIndicators()
     };
+  },
+
+  countIndicators(){
+    var indicators = this.model.attributes.survey_ui_schema["ui:group:indicators"];
+    return Object.keys(indicators).length;
   },
 
   formartterWithTime(date) {
