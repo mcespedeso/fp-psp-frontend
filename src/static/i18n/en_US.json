@@ -217,6 +217,7 @@
       "interventions": "Interventions",
       "contact": "Contact",
       "cell": "Cell phone",
+      "email": "Email",
       "place": "Place",
       "no-priority": "No indicator was prioritized in this snapshot"
     },

@@ -32,13 +32,15 @@ export default Mn.View.extend({
       headerItems = storage.getUserSubHeaderItems();
     }else if(this.app.getSession().userHasRole('ROLE_APP_ADMIN')){
       headerItems={};
+      let user = this.app.getSession().get('user');
+      this.$el.find('#cancel').attr('href', `#organizations/${user.organization.id}/users`);
     }else{
       headerItems = storage.getSubHeaderItems();
     }
     this.app.updateSubHeader(headerItems);
   },
   onAttach() {
-    this.loadOrgs()
+    this.loadOrgs();
   },
   loadOrgs() {
     const session = this.app.getSession();
