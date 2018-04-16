@@ -15,6 +15,7 @@ import utils from '../../utils';
 import FlashesService from '../../flashes/service';
 import OrganizationsModel from '../../management/organizations/model';
 import ApplicationModel from '../../applications/model';
+import ModalService from "../../modal/service";
 
 export default Mn.View.extend({
   template: Template,
@@ -42,8 +43,8 @@ export default Mn.View.extend({
             if(!$.isEmptyObject(self.model.attributes.applications)){
               self.$el.find('#organization').val(self.getValuesIdArray()).trigger("change");
             }
-            self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema));
-            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));
+            self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema, null, 3));
+            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema, null, 3));
         }
       }
     });
@@ -60,8 +61,8 @@ export default Mn.View.extend({
             if(!$.isEmptyObject(self.model.attributes.organizations)){
               self.$el.find('#organization').val(self.getValuesIdArray()).trigger("change");
             }
-            self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema));
-            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));
+            self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema, null, 3));
+            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema, null, 3));
         }
       }
     });
@@ -94,9 +95,15 @@ export default Mn.View.extend({
        });
 
        if(!$.isEmptyObject(this.model.attributes)){
-        this.$el.find('.inputdisable').attr('disabled',true);
-        this.schema.setOption('readOnly', true);
-        this.schemaUI.setOption('readOnly', true);
+         if (this.app.getSession().userHasRole('ROLE_ROOT')) {
+           this.$el.find('.inputdisable').attr('disabled', false);
+           this.schema.setOption('readOnly', false);
+           this.schemaUI.setOption('readOnly', false);
+         } else {
+           this.$el.find('.inputdisable').attr('disabled',true);
+           this.schema.setOption('readOnly', true);
+           this.schemaUI.setOption('readOnly', true);
+         }
         this.$el.find('#organization').val(this.getValuesIdArray()).trigger('change');
        }
 
@@ -109,7 +116,7 @@ export default Mn.View.extend({
       autoCloseBrackets: true,
       mode: 'application/ld+json',
       lineNumbers: true,
-      lineWrapping: true,
+      lineWrapping: false,
       tabMode: 'indent'
     });
     this.schemaUI = CodeMirror.fromTextArea(
@@ -119,7 +126,7 @@ export default Mn.View.extend({
         autoCloseBrackets: true,
         mode: 'application/ld+json',
         lineNumbers: true,
-        lineWrapping: true,
+        lineWrapping: false,
         tabMode: 'indent'
       }
     );
@@ -134,8 +141,16 @@ export default Mn.View.extend({
   handleSubmit(event) {
       try {
         event.preventDefault();
-        this.saveySurvey();
 
+        ModalService.request('confirm', {
+          title: t('survey.save.confirm-title'),
+          text: t('survey.save.confirm-text')
+        }).then(confirmed => {
+          if (!confirmed) {
+            return;
+          }
+          this.saveySurvey();
+        });
       } catch (e) {
         FlashesService.request('add', {
           timeout: 2000,
@@ -177,15 +192,10 @@ export default Mn.View.extend({
 
       this.model.set('organizations', organizationArray);
       this.model.set('applications', applicationArray);
+      this.model.set('survey_schema', this.schema.getValue());
+      this.model.set('survey_ui_schema', this.schemaUI.getValue());
 
-      let validate = {
-        title: this.model.get('title'),
-        description: this.model.get('description'),
-        survey_schema: this.schema.getValue(),
-        survey_ui_schema: this.schemaUI.getValue()
-      };
-
-      let errors = this.model.validate(validate);
+      let errors = this.model.validate();
 
       if (errors) {
         errors.forEach(error => {
@@ -210,7 +220,7 @@ export default Mn.View.extend({
           FlashesService.request('add', {
             timeout: 2000,
             type: 'info',
-            title: 'The survey has been saved'
+            title: t('survey.save.success')
           });
           Bn.history.navigate(
             `/surveys`,
