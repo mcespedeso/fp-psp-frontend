@@ -24,8 +24,6 @@ export default Mn.View.extend({
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
 
-    console.log(this.model.attributes.snapshot_indicators);
-
     if (this.entity == null) {
       $('#sub-header .navbar-header > .navbar-brand').addClass('subActive');
     } else {
@@ -72,7 +70,6 @@ export default Mn.View.extend({
   },
   getJsonData() {
     let data = {};
-
     data.firstName = this.model.attributes.snapshot_indicators.family.person.firstName;
     data.lastName = this.model.attributes.snapshot_indicators.family.person.lastName;
     data.identificationNumber = this.model.attributes.snapshot_indicators.family.person.identificationNumber;
