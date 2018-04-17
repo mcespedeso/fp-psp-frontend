@@ -231,7 +231,7 @@
       "cell": "Celular",
       "email": "Correo electrónico",
       "place": "Lugar",
-      "no-priority": "Ningún indicador fue priorizado en este snapshot"
+      "no-priority": "Ningún indicador fue priorizado en este semáforo"
     },
     "manage": {
       "manage-families": "Gestión de familias",

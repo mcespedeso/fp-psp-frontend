@@ -105,7 +105,7 @@
     },
     "family": "Household",
     "interventions": "Interventions",
-    "snapshots": "Snapshots",
+    "snapshots": "Stoplights",
     "hubs": "Hubs",
     "families": "Households",
     "users": "Users",
@@ -120,7 +120,7 @@
   "home": {
     "activity": "Activity Feed",
     "number-families": "Number of Households",
-    "snapshots-taken": "Snapshots taken",
+    "snapshots-taken": "Stoplights taken",
     "map-results": "Map results",
     "total": "in total",
     "indicators": "Indicators",
@@ -139,12 +139,12 @@
         "print": "Print"
       },
       "family": "Household",
-      "snapshot": "Snapshot",
+      "snapshot": "Stoplight",
       "not-share": "I'd prefer not to share my family's situation",
       "print-header": "Life Map",
       "messages": {
         "not-save": "Your personal information has not been saved in the platform",
-        "finish": "Your snapshot was completed successfully. The household's code is \"%{code}\" "
+        "finish": "Your Stoplight was completed successfully. The household's code is \"%{code}\" "
       }
     },
     "priority": {
@@ -222,7 +222,7 @@
     "family": "Household",
     "code": "Cod",
     "map": {
-      "snapshot": "Snapshot",
+      "snapshot": "Stoplight",
       "priorities": "Priorities",
       "indicators": "Indicators",
       "file": "File",
@@ -231,7 +231,7 @@
       "cell": "Cell phone",
       "email": "Email",
       "place": "Place",
-      "no-priority": "No indicator was prioritized in this snapshot"
+      "no-priority": "No indicator was prioritized in this stoplight"
     },
     "manage": {
       "manage-families": "Manage households",
@@ -337,7 +337,7 @@
   },
   "report": {
     "snapshot": {
-      "title": "Snapshots Taken Report",
+      "title": "Stoplights Taken Report",
       "search": {
         "date-from": "Date From",
         "date-to": "Date To",
