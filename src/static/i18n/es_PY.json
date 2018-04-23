@@ -63,7 +63,6 @@
     "economic-info": "Información Socioeconómica",
     "indicators": "Indicadores",
     "not-answer": "Omitir pregunta",
-    "select-an-option": "Selecciona una opción para este Indicador",
     "buttons": {
       "save-draft": "Guardar Borrador"
     },
@@ -161,7 +160,8 @@
         "delete-confirm-title": "Confirmación de eliminación",
         "indicator-not-answered": "Durante la encuesta, has elegido no responder la pregunta",
         "select-delete": "Eliminar esta prioridad",
-        "mising-field": "Campo '\"%{field}\"' faltante"
+        "mising-field": "Campo '\"%{field}\"' faltante",
+        "min-priorities": "Seleccione al menos %{min} prioridades"
       },
       "add": {
         "indicator": "Indicador",
@@ -222,7 +222,6 @@
     },
     "family": "Familia",
     "code": "Cód",
-    "no-assignment": "Sin Asignación",
     "map": {
       "snapshot": "Semáforo tomado",
       "priorities": "Prioridades",

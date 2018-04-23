@@ -63,7 +63,6 @@
     "economic-info": "Socio-economic Information",
     "indicators": "Indicators",
     "not-answer": "Skip question",
-    "select-an-option": "Select an option for this Indicator",
     "buttons": {
       "save-draft": "Save Draft"
     },
@@ -161,7 +160,8 @@
         "delete-confirm-title": "Confirm Deletion",
         "indicator-not-answered": "You have chosen not to answer the question",
         "select-delete": "Remove this priority",
-        "mising-field": "Missing '\"%{field}\"' field"
+        "mising-field": "Missing '\"%{field}\"' field",
+        "min-priorities": "Select %{min} priorities"
       },
       "add": {
         "indicator": "Indicator",
@@ -222,7 +222,6 @@
     },
     "family": "Household",
     "code": "Cod",
-    "no-assignment": "No assignment",
     "map": {
       "snapshot": "Stoplight",
       "priorities": "Priorities",
