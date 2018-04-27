@@ -204,8 +204,9 @@ export default Mn.View.extend({
   handleShowFamilyMap() {
 
    let countPriorities = this.model.attributes.indicators_priorities.filter(this.isAttainment);
+   let totRedYellowIndicators = this.model.attributes.count_red_indicators + this.model.attributes.count_yellow_indicators;
 
-    if(countPriorities.length <= 0 && (this.model.attributes.count_red_indicators + this.model.attributes.count_yellow_indicators) >= countPriorities.length){
+    if(countPriorities.length <= 0 && totRedYellowIndicators >= countPriorities.length){
 
       ModalService.request('confirm', {
         title: t('general.messages.information'),
@@ -222,15 +223,12 @@ export default Mn.View.extend({
 
     } else {
 
-      if ((this.model.attributes.count_red_indicators + this.model.attributes.count_yellow_indicators) >= this.parameterModel.value) {
-        if(countPriorities.length < this.parameterModel.value){
-
-              return FlashesService.request('add', {
-                timeout: 2000,
-                type: 'warning',
-                title: t('survey.priority.messages.min-priorities', {min: this.parameterModel.value})
-              });
-        }
+      if (totRedYellowIndicators >= this.parameterModel.value && countPriorities.length < this.parameterModel.value) {
+        return FlashesService.request('add', {
+          timeout: 2000,
+          type: 'warning',
+          title: t('survey.priority.messages.min-priorities', {min: this.parameterModel.value})
+        });
       }
 
       this.savedNotification();
