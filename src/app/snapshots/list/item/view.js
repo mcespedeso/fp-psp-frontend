@@ -32,7 +32,7 @@ export default Mn.View.extend({
   },
 
   onRender(){
-    const self = this;    
+    const self = this;
     this.parameterModel = new ParameterModel();
     this.parameterModel.fetch({
       data: { keyParameter: 'minimum_priority'},
@@ -197,9 +197,16 @@ export default Mn.View.extend({
     $('#modal-region').append(this.priorityDialog.render().el);
   },
 
+  isAttainment(data){
+    return data.is_attainment === false;
+  },
+
   handleShowFamilyMap() {
 
-    if(this.model.attributes.indicators_priorities.length <= 0 && (this.model.attributes.count_red_indicators>0 || this.model.attributes.count_yellow_indicators>0)){
+   let countPriorities = this.model.attributes.indicators_priorities.filter(this.isAttainment);
+
+    if(countPriorities.length <= 0 && (this.model.attributes.count_red_indicators + this.model.attributes.count_yellow_indicators) >= countPriorities.length){
+
       ModalService.request('confirm', {
         title: t('general.messages.information'),
         text: t('survey.priority.messages.without-priorities')
@@ -214,16 +221,15 @@ export default Mn.View.extend({
       });
 
     } else {
-      let totalRedYellowIndicator = this.model.attributes.count_red_indicators + this.model.attributes.count_yellow_indicators;
-      if(this.model.attributes.indicators_priorities.length > 0){
-        if(totalRedYellowIndicator >= this.parameterModel.value ){
-          if(this.model.attributes.indicators_priorities.length < this.parameterModel.value){
-            return FlashesService.request('add', {
-              timeout: 2000,
-              type: 'warning',
-              title: t('survey.priority.messages.min-priorities', {min: this.parameterModel.value})
-            });
-          }
+
+      if ((this.model.attributes.count_red_indicators + this.model.attributes.count_yellow_indicators) >= this.parameterModel.value) {
+        if(countPriorities.length < this.parameterModel.value){
+
+              return FlashesService.request('add', {
+                timeout: 2000,
+                type: 'warning',
+                title: t('survey.priority.messages.min-priorities', {min: this.parameterModel.value})
+              });
         }
       }
 
