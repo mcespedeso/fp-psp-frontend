@@ -1,8 +1,8 @@
 <div class="list-common-content">
   <div id="top" class="search-container">
     <div class="row">
-      <div class="col-md-12">
-        <form class="form-inline">
+      <div class="col-md-3">
+      
           <div class="form-group">
             <label>{{$t 'report.snapshot.search.date-from'}} * :</label>
             <div class='input-group date' id='dateFrom'>
@@ -12,6 +12,9 @@
                 </span>
             </div>            
           </div>
+        </div>
+
+        <div class="col-md-3">
           <div class="form-group">
             <label>{{$t 'report.snapshot.search.date-to'}} * :</label>
             <div class='input-group date' id='dateTo'>
@@ -21,18 +24,23 @@
                 </span>
             </div>            
           </div>
-          <div class="form-group" id="organizationForm">
-              <label is="organizationLabel">{{$t 'report.snapshot.search.organization'}} * : </label>
-              <select class="form-control" id="organization">
-                  <option selected disabled value="choose">{{$t 'report.snapshot.search.choose'}}</option>
-                  <option value="all">{{$t 'report.snapshot.search.all'}}</option>
-              </select>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group" >
+            <label>{{$t 'header.organizations'}} * :</label>
+            <div class='input-group' style="width: 100% !important;">
+              <select class="form-control" id="organization" multiple="multiple" style="width: 100% !important;"></select>
+            </div>            
           </div>
-          <div class="form-group">
-            <button type="button" id="submit" class="btn btn"><i class="fa fa-search"></i> {{$t 'report.snapshot.search.search'}}</button>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        <div class="col-md-3">          
+                  <div class="form-group" style="margin-top: 24px;">
+                    <button type="button" id="submit" class="btn btn"><i class="fa fa-search"></i> {{$t 'report.snapshot.search.search'}}</button>
+                  </div>
+        </div>
+
     </div>
   </div>
   <div id="family-organization-list" class="has-spinner">
