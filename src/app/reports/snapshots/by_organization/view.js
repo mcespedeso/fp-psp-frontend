@@ -97,14 +97,11 @@ export default Mn.View.extend({
         
         let organizationArray = [];
         
-        // if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')){
-          // this.filters.organization_id = this.$el.find('#organization').val() === 'all'? '' : this.$el.find('#organization').val();
+        if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')){          
           $("#organization").val().forEach(element => {
             organizationArray.push({id: element})
           });
-        // }
-
-        // console.log(organizationArray);
+        }        
 
         this.filters.organizations_list = JSON.stringify(organizationArray);
 
@@ -122,9 +119,6 @@ export default Mn.View.extend({
             });
           });
         } else {
-
-          console.log(this.filters);
-
           this.collection.fetch({
             data: this.filters,
             success() {
@@ -154,10 +148,6 @@ export default Mn.View.extend({
   validate(filters) {
 
     const errors = [];
-
-    // if (!filters.organization_id && !filters.application_id) {
-    //   errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.organization')}));
-    // }
 
     if (!filters.date_from) {
       errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.date-from')}));
