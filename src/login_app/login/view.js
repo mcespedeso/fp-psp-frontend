@@ -19,7 +19,9 @@ export default Mn.View.extend({
     'click #back-login': 'backLogin',
     'click #btn-recovery': 'sendEmail'
   },
-
+  serializeData() {
+    return { appPlatform: env.platform };
+  },
   initialize(options) {
     this.app = options.app;
     this.localeConfiguration = options.localeConfiguration;
@@ -39,10 +41,6 @@ export default Mn.View.extend({
   onRender() {
     setTimeout(() => {
       this.$el.find('#login-username').focus();
-      console.log(`mostrando el env ${  env.platform}`);
-      // $('#platform-name').val(env.platform);
-      $("#platform-name").text(env.platform);
-
     }, 0);
 
   },

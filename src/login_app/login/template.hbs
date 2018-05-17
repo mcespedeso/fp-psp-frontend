@@ -5,7 +5,6 @@
 
     <img src="/static/images/icon_logo_PSL.png" class="center-block login-logo" alt="PS" />
     <hr />
-    {{!-- <label class="center-block" id="platform-name" for=""></label> --}}
     <div class="panel">
       <div class="panel-heading">
         <div class="panel-body">
@@ -35,8 +34,9 @@
             <div class="pull-right link-email recovery" style="display:none;margin-top: -21px;margin-right: 71px;text-decoration: none;cursor: pointer;">{{$t 'login.back-login'}}</div>
         </a>
       </div>
-      {{!-- <div class="panel-footer text-center" id="platform-name"></div> --}}
     </div>
-    <div class="pull-right" id="platform-name" style="color: #788c9a !important; font-size: 14px !important;"></div>
+    <div class="pull-right" id="platform-name" style="color: #788c9a !important; font-size: 14px !important;">
+      <span>{{{appPlatform}}}</span>
+    </div>
   </div>
   <div id="flashes"></div>
