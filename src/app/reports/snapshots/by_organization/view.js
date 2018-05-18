@@ -145,10 +145,6 @@ export default Mn.View.extend({
 
     const errors = [];
 
-    if (typeof filters.organizations === 'undefined' || filters.organizations.length <= 0) {
-      errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.organization')}));
-    }
-
     if (!filters.date_from) {
       errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.date-from')}));
     }
