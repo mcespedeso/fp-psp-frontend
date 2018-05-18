@@ -26,12 +26,10 @@ export default Mn.View.extend({
     this.filters = {
         date_from: '',
         date_to: '',
-        organization_id: '',
         family_id:'',
         application_id:'',
-        organizations_list:[]
+        organizations:[]
     }
-    this.organizations = {};
   },
 
   onRender(){
@@ -48,7 +46,6 @@ export default Mn.View.extend({
 
     this.getOrganizations();
 
-    return this.organizations;
   },
 
   getOrganizations(){
@@ -99,14 +96,13 @@ export default Mn.View.extend({
         
         if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')){          
           $("#organization").val().forEach(element => {
-            organizationArray.push({id: element})
+            organizationArray.push(parseInt(element, 10));
           });
         }        
 
-        this.filters.organizations_list = JSON.stringify(organizationArray);
+        this.filters.organizations = organizationArray;
 
-        this.filters.application_id = this.$el.find('#organization').val() === 'all' &&
-                                      this.app.getSession().get('user').application ? this.app.getSession().get('user').application.id : '';
+        this.filters.application_id = this.app.getSession().get('user').application ? this.app.getSession().get('user').application.id : '';
 
         let errors = this.validate(this.filters);
 
@@ -148,6 +144,10 @@ export default Mn.View.extend({
   validate(filters) {
 
     const errors = [];
+
+    if (typeof filters.organizations === 'undefined' || filters.organizations.length <= 0) {
+      errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.organization')}));
+    }
 
     if (!filters.date_from) {
       errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.date-from')}));
