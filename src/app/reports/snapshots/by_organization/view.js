@@ -10,7 +10,7 @@ import FlashesService from '../../../flashes/service';
 import storage from '../../storage';
 import env from "../../../env";
 
-export default Mn.View.extend({
+export default Mn.View.extend({  
   template: Template,
   organizationsCollection: new OrganizationModel(),
   events: {
@@ -29,7 +29,7 @@ export default Mn.View.extend({
         family_id:'',
         application_id:'',
         organizations:[]
-    }
+    }    
   },
 
   onRender(){
@@ -45,6 +45,8 @@ export default Mn.View.extend({
       .addClass('subActive');
 
     this.getOrganizations();
+
+    this.app.getSession().userHasRole('ROLE_APP_ADMIN') ? this.$el.find('#organizations').hide() : this.$el.find('#organizations').show();
 
   },
 
@@ -98,7 +100,9 @@ export default Mn.View.extend({
           $("#organization").val().forEach(element => {
             organizationArray.push(parseInt(element, 10));
           });
-        }        
+        }else if(this.app.getSession().userHasRole('ROLE_APP_ADMIN')){          
+          organizationArray.push(this.app.getSession().get('user').organization.id);
+        }
 
         this.filters.organizations = organizationArray;
 
