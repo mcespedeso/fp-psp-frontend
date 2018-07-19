@@ -100,14 +100,15 @@
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
     "moment-timezone": "^0.5.14",
+    "node-polyglot": "^2.2.2",
     "nprogress": "^0.2.0",
     "parsleyjs": "^2.7.2",
     "react": "^15.6.2",
     "react-datetime": "^2.11.1",
     "react-dom": "^15.6.2",
     "react-gmaps": "^1.7.0",
+    "react-google-maps": "^9.4.5",
     "react-jsonschema-form": "^0.50.1",
-    "node-polyglot": "^2.2.2",
     "select2": "^4.0.6-rc.1"
   },
   "lint-staged": {
