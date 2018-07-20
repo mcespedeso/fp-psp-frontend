@@ -218,10 +218,8 @@
       "not-answer": "Select your answer!",
       "answer-validation": "You must first accept the terms and conditions!"
     },
-    "templates": {
-      "term-cond": "<h1>Terms and Conditions</h1><div class='text-box'>Please Read Carefully Before Using This Application</div>",
-      "pol": "<h1>Privacy Policies</h1><div class='text-box'>Please Read Carefully Before Using This Application</div>"
-    }
+    "select-locale": "Language",
+    "select-display-language": "Select the displayed language of the Terms and Conditions/Privacy Policy"
   },
   "family": {
     "search": {

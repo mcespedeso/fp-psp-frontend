@@ -50,11 +50,13 @@ export default Mn.View.extend({
     this.$el.find('#text').empty();
 
     const termCondPolModel = new TermCondPolModel();
+    const locale = this.app.getSession().getLocale();
     termCondPolModel
       .fetch({
         data: {
           type: 'PRIV',
-          applicationId: this.currentApplicationId
+          applicationId: this.currentApplicationId,
+          locale
         }
       })
       .then(() => {
@@ -63,7 +65,7 @@ export default Mn.View.extend({
       });
 
     Bn.history.navigate(
-      `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}`
+      `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}/${locale}`
     );
   },
 
@@ -101,8 +103,9 @@ export default Mn.View.extend({
           this.reCheckPriv();
           return;
         }
+        const locale = this.app.getSession().getLocale();
         Bn.history.navigate(
-          `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}`,
+          `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}/${locale}`,
           true
         );
       } else if (
