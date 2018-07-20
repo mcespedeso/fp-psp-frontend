@@ -91,8 +91,6 @@
     "bootstrap": "^3.3.7",
     "c3": "^0.4.18",
     "codemirror": "^5.32.0",
-    "create-react-class": "^15.5.2",
-    "d3": "^4.12.2",
     "datatables.net": "^1.10.16",
     "datatables.net-bs": "^1.10.16",
     "eonasdan-bootstrap-datetimepicker": "^4.17.43",
@@ -101,7 +99,6 @@
     "moment": "^2.19.1",
     "moment-timezone": "^0.5.14",
     "nprogress": "^0.2.0",
-    "parsleyjs": "^2.7.2",
     "react": "^15.6.2",
     "react-datetime": "^2.11.1",
     "react-dom": "^15.6.2",
@@ -111,9 +108,18 @@
     "select2": "^4.0.6-rc.1"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix --ignore-path .gitignore \"src/**/*.js\"", "git add"],
-    "*.json": ["prettier --write", "git add"],
-    "*.scss": ["prettier --write", "git add"]
+    "*.js": [
+      "eslint --fix --ignore-path .gitignore \"src/**/*.js\"",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.scss": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "scripts": {
     "start": "gulp",
