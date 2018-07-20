@@ -398,7 +398,7 @@
       },
       "buttons": {
         "export": "Descargar Reporte",
-        "download-csv": "Descargar CSV"
+        "download-csv": "Descargar Reporte CSV"
       },
       "status": "Estado",
       "survey": "Encuesta",

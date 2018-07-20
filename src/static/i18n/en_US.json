@@ -385,7 +385,7 @@
   },
   "report": {
     "snapshot": {
-      "title": "Stoplights Taken Report",
+      "title": "Snapshots Report",
       "search": {
         "date-from": "Date From",
         "date-to": "Date To",
@@ -398,7 +398,7 @@
       },
       "buttons": {
         "export": "Download Report",
-        "download-csv": "Download CSV"
+        "download-csv": "Download CSV Report"
       },
       "status": "Status",
       "survey": "Survey",

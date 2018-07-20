@@ -148,7 +148,7 @@
       "print-header": "Life Map",
       "messages": {
         "not-save": "Your personal information has not been saved in the platform",
-        "finish": "Your stoplight was completed successfully. The household's code is \"%{code}\" "
+        "finish": "Your Stoplight was completed successfully. The household's code is \"%{code}\" "
       }
     },
     "priority": {
@@ -385,7 +385,7 @@
   },
   "report": {
     "snapshot": {
-      "title": "Stoplights Taken Report",
+      "title": "Snapshots Report",
       "search": {
         "date-from": "Date From",
         "date-to": "Date To",
@@ -398,7 +398,7 @@
       },
       "buttons": {
         "export": "Download Report",
-        "download-csv": "Download CSV"
+        "download-csv": "Download CSV Report"
       },
       "status": "Status",
       "survey": "Survey",
