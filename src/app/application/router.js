@@ -7,11 +7,12 @@ import logout from '../logout/routes';
 import initAuthorizer from './router-authorizer';
 import families from '../families/routes';
 import home from '../home/routes';
-import termcondpol from '../termcondpol/routes'
+import termcondpol from '../termcondpol/routes';
 import faqs from '../faqs/routes';
 import snapshotsDraft from '../snapshots_drafts/routes';
-import reports from '../reports/routes'
+import reports from '../reports/routes';
 import management from '../management/routes';
+import map from '../map/routes';
 
 const initRouter = props => {
   const { app, before, onAccessDenied } = props;
@@ -27,7 +28,8 @@ const initRouter = props => {
     faqs(props),
     snapshotsDraft(props),
     reports(props),
-    management(props)
+    management(props),
+    map(props)
   );
   const authorizer = initAuthorizer({
     onAccessDenied,

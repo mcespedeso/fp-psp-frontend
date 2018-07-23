@@ -84,6 +84,7 @@
     "created": "Created at"
   },
   "header": {
+    "map": "Map",
     "reports": "Reports",
     "surveys": "Surveys",
     "faqs": "FAQs",

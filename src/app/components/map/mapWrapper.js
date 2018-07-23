@@ -40,7 +40,6 @@ class MapWrapper extends Component {
   }
   selectSurvey(survey) {
     this.setState({ selectedSurvey: survey });
-    this.toggleSurveyDropdown();
     this.updateIndicators(survey);
   }
   selectIndicator(indicator) {
