@@ -6,6 +6,7 @@ import CollectionView from './collection-view';
 import utils from '../../utils';
 import FamiliesCollection from '../collection';
 import OrganizationsModel from '../../management/organizations/model';
+import env from "../../env";
 
 export default Mn.View.extend({
   template: Template,
@@ -37,10 +38,10 @@ export default Mn.View.extend({
   },
   loadSelects() {
     const self = this;
-
+    this.organizationsCollection.urlRoot = `${env.API}/organizations/list`;
     this.organizationsCollection.fetch({
       success(response) {
-        self.organizationsCollection = response.get('list');
+        self.organizationsCollection = response.toJSON();
         $.each(self.organizationsCollection, (index, element) => {
           $('#organization').append(
             $('<option></option>')
