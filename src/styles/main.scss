@@ -1766,3 +1766,27 @@ img.current-language-flag {
 .c3-circle {
   fill: rgb(12, 17, 21) !important;
 }
+
+//MAP
+
+.map-survey-select {
+  width: 100%;
+  height: 40px;
+}
+
+.map-search {
+  display: block;
+  width: 100%;
+  height: 40px;
+  margin: 10px 0;
+  padding: 10px;
+}
+.map-indicators {
+  height: 475px;
+  overflow: scroll;
+  border: 1px solid lightgrey;
+  padding: 10px;
+}
+.map-indicator.active {
+  text-decoration: underline;
+}
