@@ -19,16 +19,21 @@ export default Mn.View.extend({
   },
 
   onRender(){
+    this.showAvailableLanguages();
+  },
+
+  showAvailableLanguages(){
+    var self = this;
+
     // TODO Change the way Locales and Languages are obtained, make it
     // Dynamic and not Static to facilitate adding more locales and consolidating
     // all locale related request to one endpoint.
-    var self = this;
     const termCondPolLanguagesModel = new TermCondPolLanguagesModel();
     termCondPolLanguagesModel.fetch({data: {applicationId: self.applicationId}})
       .then(response => {
         var possibleLangs = {};
         var keyArrayLangs = [];
-        var languageText;
+        var keyLangPairs = {"en_US":"English (US)", "en_UK":"English (UK)", "es_PY":"Español (PY)"};
         var key;
         var i;
 
@@ -44,24 +49,17 @@ export default Mn.View.extend({
         for(i = 0; i<keyArrayLangs.length; i++){
           key = keyArrayLangs[i];
           if (possibleLangs[key].length === 2){
-            if(key === "en_US"){
-              languageText = "English (US)";
-            } else if(key === "en_UK"){
-              languageText = "English (UK)";
-            } else {
-              languageText = "Español (PY)";
-            }
-
+            console.log(key);
+            console.log(keyLangPairs[key]);
             $('#select-language').append(
-              $(`<button type="button" type="submit" id="${  key
-               }" class="language-button btn" style="margin: 8px">${
-               languageText  }</button>`)
+              $(`<button type="button" type="submit" id="${key}"
+              class="language-button btn" style="margin: 8px">
+              ${keyLangPairs[key]}</button>`)
             );
           }
         }
       });
   },
-
   languagePressed(e){
     var self = this
     var locale = e.target.id;
