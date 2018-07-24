@@ -16,7 +16,7 @@ const termcondpol = props => {
         app.showViewOnRoute(new LangView({app, surveyId, applicationId}));
       },
 
-      showTermCondPol(hashSurvey, hashType, hashApplicationId, hashLocale) {
+      showTermCondPol(hashSurvey, hashType, hashApplicationId, locale) {
         const model = new TermCondPolModel();
         const surveyId = parseInt(hashSurvey, 10);
         const formData = app.getSession().get('formData');
@@ -27,12 +27,12 @@ const termcondpol = props => {
               type: hashType,
               surveyId,
               applicationId: hashApplicationId,
-              locale: hashLocale
+              locale
             }
           })
           .then(() => {
             app.showViewOnRoute(new TermCondPolView({
-               model, app, surveyId, reAnswer, formData
+               model, app, surveyId, reAnswer, formData, locale
              }));
           });
       }

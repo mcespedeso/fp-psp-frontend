@@ -20,6 +20,7 @@ export default Mn.View.extend({
     this.surveyId = options.surveyId;
     this.reAnswer = options.reAnswer;
     this.formData = options.formData;
+    this.locale = options.locale;
     if(this.app.getSession().attributes.user.application !== null) {
       this.currentApplicationId = this.app.getSession().attributes.user.application.id;
     }
@@ -50,13 +51,12 @@ export default Mn.View.extend({
     this.$el.find('#text').empty();
 
     const termCondPolModel = new TermCondPolModel();
-    const locale = this.app.getSession().getLocale();
     termCondPolModel
       .fetch({
         data: {
           type: 'PRIV',
           applicationId: this.currentApplicationId,
-          locale
+          locale: this.locale
         }
       })
       .then(() => {
@@ -65,7 +65,7 @@ export default Mn.View.extend({
       });
 
     Bn.history.navigate(
-      `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}/${locale}`
+      `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}/${this.locale}`
     );
   },
 
@@ -103,9 +103,8 @@ export default Mn.View.extend({
           this.reCheckPriv();
           return;
         }
-        const locale = this.app.getSession().getLocale();
         Bn.history.navigate(
-          `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}/${locale}`,
+          `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}/${this.locale}`,
           true
         );
       } else if (
