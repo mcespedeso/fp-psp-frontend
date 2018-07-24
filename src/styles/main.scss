@@ -785,6 +785,7 @@ table.dataTable.no-footer {
   display: block;
   margin: 0 auto;
 }
+
 .circle-small-text {
   color: #ffffff;
   text-align: center;
@@ -896,6 +897,22 @@ table.dataTable.no-footer {
 .card-user {
   border-radius: 50%;
   background-color: #95e78b;
+}
+
+.circle-user {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: block;
+  margin: 10px auto 0px auto;
+}
+
+.circle-user--active {
+  background-color: #7cd071;
+}
+
+.circle-user--inactive {
+  background-color: #bbb;
 }
 
 .circle-header {

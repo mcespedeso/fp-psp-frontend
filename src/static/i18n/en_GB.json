@@ -341,7 +341,8 @@
       "role": "Role",
       "true": "True",
       "false": "False",
-      "active": "Active"
+      "active": "Active",
+      "name": "Name"
     },
     "form": {
       "edit-title": "Edit user",

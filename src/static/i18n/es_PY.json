@@ -335,6 +335,7 @@
       "title": "Buscar un usuario"
     },
     "card": {
+      "name": "Nombre",
       "email": "Correo electrónico",
       "organization": "Organización",
       "hub": "Hub",
