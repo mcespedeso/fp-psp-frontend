@@ -1,21 +1,12 @@
 
-<div class="card-item">
-  <article class="card">
-    <div class="card-block">
-      <div class="row card-title">
-        <p class="text-left text-blue">{{$t 'family.code'}}: {{family.code}}</p>
-      </div>
-      <div class="row card-image">
-        <div class="col-md-12">
-          <a href="#families/{{family.familyId}}">
-            <img class="card-img-top img-responsive  img-card center-block" src="/static/images/family-room.png" alt="" />
-          </a>
-        </div>
-      </div>
-      <div class="row card-title">
-        <p class="text-center">{{$t 'family.family'}} {{family.name}}</p>
-      </div>
+
+  <article class="row">
+    <div class="col-sm-3">
+        <a href="#families/{{family.familyId}}">
+          <p class="text-left text-blue">{{family.name}}</p>
+        </a>
+    </div>
+    <div class="col-sm-9">
+      <p class="text-left">{{family.code}}</p>
     </div>
   </article>
-
-</div>
