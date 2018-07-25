@@ -19,6 +19,7 @@ class MapWrapper extends Component {
   }
   componentDidMount() {
     this.updateIndicators(this.state.selectedSurvey);
+    this.getData(this.state.selectedSurvey);
   }
 
   selectDefaultSurvey() {
@@ -38,9 +39,12 @@ class MapWrapper extends Component {
       selectedIndicator: indicators[0]
     });
   }
+
   selectSurvey(survey) {
     this.setState({ selectedSurvey: survey });
     this.updateIndicators(survey);
+
+    this.getData(survey);
   }
   selectIndicator(indicator) {
     this.setState({ selectedIndicator: indicator });
@@ -55,7 +59,21 @@ class MapWrapper extends Component {
       .toLowerCase()
       .replace(/^./, match => match.toUpperCase());
   }
+
+  getData(survey) {
+    const id = this.props.surveyData
+      ? this.props.surveyData.filter(item => item.title === survey)[0].id
+      : null;
+
+    fetch(`${env.API}/snapshots/?survey_id=${id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${this.props.token}`
+      }
+    }).then(response => response.json().then(res => console.log(res)));
+  }
   render() {
+    console.log(this.state);
     const { surveyData } = this.props;
     const { indicators, searchIndicators } = this.state;
     return (

@@ -8,7 +8,7 @@ const map = props => {
     },
     controller: {
       showMap() {
-        app.showViewOnRoute(new View({}));
+        app.showViewOnRoute(new View({ app }));
       }
     }
   };
