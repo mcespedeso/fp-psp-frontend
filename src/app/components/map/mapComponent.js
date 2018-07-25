@@ -10,26 +10,39 @@ import red from '../../../static/images/red-dot.svg';
 import green from '../../../static/images/green-dot.svg';
 import yellow from '../../../static/images/yellow-dot.svg';
 
+const selectColor = color => {
+  switch (color) {
+    case 'GREEN':
+      return green;
+    case 'YELLOW':
+      return yellow;
+    case 'RED':
+      return red;
+    default:
+  }
+};
 const Map = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
-      defaultZoom={7}
-      defaultCenter={{ lat: -23.442503, lng: -58.443832 }}
+      defaultZoom={3}
+      defaultCenter={{ lat: 20, lng: -15 }}
       options={{
         maxZoom: 10
       }}
     >
       {props.isMarkerShown && (
         <div>
-          <Marker
-            icon={green}
-            position={{ lat: -23.442503, lng: -58.443832 }}
-          />
-          <Marker icon={red} position={{ lat: -22.442503, lng: -59.443832 }} />
-          <Marker
-            icon={yellow}
-            position={{ lat: -21.442503, lng: -58.443832 }}
-          />
+          {console.log(props.markers)}
+          {props.markers.map(marker => (
+            <Marker
+              key={marker.coordinates}
+              icon={selectColor(marker.color)}
+              position={{
+                lat: Number(marker.coordinates.split(', ')[0]),
+                lng: Number(marker.coordinates.split(', ')[1])
+              }}
+            />
+          ))}
         </div>
       )}
     </GoogleMap>

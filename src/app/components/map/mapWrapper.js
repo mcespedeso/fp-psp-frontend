@@ -10,7 +10,9 @@ class MapWrapper extends Component {
       selectedSurvey: '',
       indicators: [],
       selectedIndicator: '',
-      searchIndicators: ''
+      searchIndicators: '',
+      snapshotData: [],
+      markers: []
     };
   }
 
@@ -43,13 +45,20 @@ class MapWrapper extends Component {
   selectSurvey(survey) {
     this.setState({ selectedSurvey: survey });
     this.updateIndicators(survey);
-
     this.getData(survey);
   }
   selectIndicator(indicator) {
-    this.setState({ selectedIndicator: indicator });
+    this.setState({
+      selectedIndicator: indicator,
+      markers: this.getMarkers(this.state.snapshotData, indicator)
+    });
   }
-
+  getMarkers(data, indicator) {
+    return data.map(item => ({
+      coordinates: item.economic_survey_data.familyUbication,
+      color: item.indicator_survey_data[indicator]
+    }));
+  }
   searchIndicators(query) {
     this.setState({ searchIndicators: query });
   }
@@ -70,8 +79,16 @@ class MapWrapper extends Component {
       headers: {
         Authorization: `Bearer ${this.props.token}`
       }
-    }).then(response => response.json().then(res => console.log(res)));
+    }).then(response =>
+      response.json().then(res =>
+        this.setState({
+          snapshotData: res,
+          markers: this.getMarkers(res, this.state.selectedIndicator)
+        })
+      )
+    );
   }
+
   render() {
     console.log(this.state);
     const { surveyData } = this.props;
@@ -120,6 +137,7 @@ class MapWrapper extends Component {
         </div>
         <div className="map col-md-9">
           <Map
+            markers={this.state.markers}
             isMarkerShown
             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
               env.GOOGLEKEY
