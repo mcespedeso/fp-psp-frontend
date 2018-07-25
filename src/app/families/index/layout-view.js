@@ -2,15 +2,17 @@ import Mn from 'backbone.marionette';
 import Bn from 'backbone';
 import $ from 'jquery';
 import Template from './layout-template.hbs';
-import CollectionView from './collection-view';
 import utils from '../../utils';
 import FamiliesCollection from '../collection';
 import OrganizationsModel from '../../management/organizations/model';
 import env from '../../env';
+import ItemView from './item/view';
+import ModalService from '../../modal/service';
+import FlashesService from '../../flashes/service';
 
 export default Mn.View.extend({
   template: Template,
-  collection: new CollectionView(),
+  collection: new Bn.Collection(),
   organizationsCollection: new OrganizationsModel(),
   regions: {
     list: '#family-list'
@@ -31,7 +33,7 @@ export default Mn.View.extend({
     this.showList();
     this.loadSelects();
   },
-  fetchHouseHolds(params) {
+  fetchHouseHolds(params, section) {
     const elements = new FamiliesCollection();
     const self = this;
     elements.fetch({
@@ -39,13 +41,29 @@ export default Mn.View.extend({
       success(response) {
         self.collection = response;
         self.showList();
+        section ? section.reset() : '';
       }
     });
   },
   showList() {
-    this.getRegion('list').show(
-      new CollectionView({ collection: this.collection })
-    );
+    let element = this.$el.find('#family-list');
+    element.empty();
+
+    this.collection.forEach(item => {
+      let itemView = new ItemView({
+        model: item,
+        deleteFamily: this.deleteFamily.bind(this),
+        className: 'list-container row'
+      });
+
+      // Render the view, and append its element
+      // to the list/table
+      element.append(itemView.render().el);
+    });
+
+    // this.getRegion('list').show(
+    //   new CollectionView({ collection: this.collection })
+    // );
   },
   loadSelects() {
     const self = this;
@@ -78,7 +96,41 @@ export default Mn.View.extend({
         organization_id: $('#organization').val(),
         free_text: $('#search').val()
       };
-      self.fetchHouseHolds(params);
+      self.fetchHouseHolds(params, section);
     }
+  },
+  deleteFamily(model) {
+    let self = this;
+    ModalService.request('confirm', {
+      title: t('family.manage.messages.delete-confirm-title'),
+      text: t('family.manage.messages.delete-confirm')
+    }).then(confirmed => {
+      if (!confirmed) {
+        return;
+      }
+
+      model.set('id', model.get('familyId'));
+      model.destroy({
+        success: () => self.handleDestroySuccess(),
+        error: (item, response) => self.handleDestroyError(response),
+        wait: true
+      });
+    });
+  },
+  handleDestroySuccess() {
+    this.showList();
+    return FlashesService.request('add', {
+      timeout: 2000,
+      type: 'info',
+      body: t('family.manage.messages.delete-done')
+    });
+  },
+
+  handleDestroyError(error) {
+    return FlashesService.request('add', {
+      timeout: 2000,
+      type: 'danger',
+      body: error.responseJSON ? error.responseJSON.message : 'Error'
+    });
   }
 });
