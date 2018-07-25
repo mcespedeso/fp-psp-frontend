@@ -24,13 +24,12 @@ export default Mn.View.extend({
   initialize(options) {
     this.collection = new Bn.Collection();
     this.app = options.app;
+    this.fetchHouseHolds();
   },
   onRender() {
-    this.fetchHouseHolds();
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
-    this.showList();
     this.loadSelects();
   },
   fetchHouseHolds(params, section) {
