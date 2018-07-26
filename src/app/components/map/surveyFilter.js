@@ -10,7 +10,7 @@ const SurveyFilter = props => (
   <div>
     <label>Survey</label>
     <select
-      className="map-survey-select"
+      className="map-select"
       onChange={e => props.selectSurvey(e.target.value)}
     >
       {props.surveys.map(item => <option key={item}>{item}</option>)}

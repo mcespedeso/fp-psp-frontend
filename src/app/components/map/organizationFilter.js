@@ -5,7 +5,10 @@ const OrganizationFilter = props => (
     <div>
       <label>Organization</label>
     </div>
-    <select onChange={e => props.selectOrganization(e.target.value)}>
+    <select
+      className="map-select"
+      onChange={e => props.selectOrganization(e.target.value)}
+    >
       <option value="">All</option>
       {props.organizations.map(organization => (
         <option key={organization} value={organization}>

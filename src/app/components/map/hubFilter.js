@@ -5,7 +5,10 @@ const HubFilter = props => (
     <div>
       <label>Hub</label>
     </div>
-    <select onChange={e => props.selectHub(e.target.value)}>
+    <select
+      className="map-select"
+      onChange={e => props.selectHub(e.target.value)}
+    >
       <option value="">All</option>
       {props.hubs.map(hub => (
         <option key={hub} value={hub}>

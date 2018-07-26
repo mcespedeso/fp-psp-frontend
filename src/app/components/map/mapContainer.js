@@ -184,9 +184,10 @@ class MapContainer extends Component {
       selectedCountry
     } = this.state;
     return (
-      <div className="map-container ">
+      <div className="map-container">
         <div className="row">
-          <div className="col-sm-2">
+          {' '}
+          <div className="col-sm-3">
             <CountryFilter
               countries={this.getCountries(this.state.snapshotData)}
               selectCountry={this.selectCountry}
@@ -210,42 +211,45 @@ class MapContainer extends Component {
               selectHousehold={this.selectHousehold}
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-3">
             <ColorPicker
               toggleSelectedColors={this.toggleSelectedColors}
               selectedColors={selectedColors}
             />
           </div>
         </div>
-        <div className="map-sidebar col-md-3">
-          <SurveyFilter
-            surveys={this.getSurveys(surveyData)}
-            selectSurvey={this.selectSurvey}
-            searchIndicators={this.searchIndicators}
-            searchIndicatorsQuery={searchIndicatorsQuery}
-            indicators={indicators}
-            selectIndicator={this.selectIndicator}
-            selectedIndicator={selectedIndicator}
-          />
-        </div>
-        <div className="map col-md-9">
-          <Map
-            selectedColors={selectedColors}
-            markers={markers}
-            selectedHousehold={selectedHousehold}
-            selectedOrganization={selectedOrganization}
-            selectedHub={selectedHub}
-            selectedCountry={selectedCountry}
-            isMarkerShown
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
-              env.GOOGLEKEY
-            }&v=3.exp&libraries=geometry,drawing,places`}
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={
-              <div style={{ height: `600px`, width: `100%` }} />
-            }
-            mapElement={<div style={{ height: `100%` }} />}
-          />
+
+        <div className="row">
+          <div className="map-sidebar col-md-3">
+            <SurveyFilter
+              surveys={this.getSurveys(surveyData)}
+              selectSurvey={this.selectSurvey}
+              searchIndicators={this.searchIndicators}
+              searchIndicatorsQuery={searchIndicatorsQuery}
+              indicators={indicators}
+              selectIndicator={this.selectIndicator}
+              selectedIndicator={selectedIndicator}
+            />
+          </div>
+          <div className="map col-md-9">
+            <Map
+              selectedColors={selectedColors}
+              markers={markers}
+              selectedHousehold={selectedHousehold}
+              selectedOrganization={selectedOrganization}
+              selectedHub={selectedHub}
+              selectedCountry={selectedCountry}
+              isMarkerShown
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
+                env.GOOGLEKEY
+              }&v=3.exp&libraries=geometry,drawing,places`}
+              loadingElement={<div style={{ height: `100%` }} />}
+              containerElement={
+                <div style={{ height: `600px`, width: `100%` }} />
+              }
+              mapElement={<div style={{ height: `100%` }} />}
+            />
+          </div>
         </div>
       </div>
     );
