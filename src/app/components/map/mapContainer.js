@@ -29,10 +29,7 @@ class MapContainer extends Component {
     this.selectSurvey = this.selectSurvey.bind(this);
     this.searchIndicators = this.searchIndicators.bind(this);
     this.selectIndicator = this.selectIndicator.bind(this);
-    this.selectHousehold = this.selectHousehold.bind(this);
-    this.selectOrganization = this.selectOrganization.bind(this);
-    this.selectHub = this.selectHub.bind(this);
-    this.selectCountry = this.selectCountry.bind(this);
+    this.selectItem = this.selectItem.bind(this);
   }
 
   componentWillMount() {
@@ -61,6 +58,10 @@ class MapContainer extends Component {
         })
       )
     );
+  }
+
+  selectItem(item) {
+    this.setState(item);
   }
 
   getSurveys(data) {
@@ -113,18 +114,10 @@ class MapContainer extends Component {
     return data.map(household => household.family.name);
   }
 
-  selectHousehold(household) {
-    this.setState({ selectedHousehold: household });
-  }
-
   getOrganizations(data) {
     return data
       .map(organization => organization.family.organization.name)
       .filter((organization, i, self) => self.indexOf(organization) === i);
-  }
-
-  selectOrganization(organization) {
-    this.setState({ selectedOrganization: organization });
   }
 
   getHubs(data) {
@@ -133,18 +126,10 @@ class MapContainer extends Component {
       .filter((hub, i, self) => self.indexOf(hub) === i);
   }
 
-  selectHub(hub) {
-    this.setState({ selectedHub: hub });
-  }
-
   getCountries(data) {
     return data
       .map(country => (country.family.organization.country || {}).country)
       .filter((country, i, self) => country && self.indexOf(country) === i);
-  }
-
-  selectCountry(country) {
-    this.setState({ selectedCountry: country });
   }
 
   getMarkers(data, indicator) {
@@ -186,29 +171,28 @@ class MapContainer extends Component {
     return (
       <div className="map-container">
         <div className="row">
-          {' '}
           <div className="col-sm-3">
             <CountryFilter
-              countries={this.getCountries(this.state.snapshotData)}
-              selectCountry={this.selectCountry}
+              data={this.getCountries(this.state.snapshotData)}
+              selectItem={this.selectItem}
             />
           </div>
           <div className="col-sm-2">
             <HubFilter
-              hubs={this.getHubs(this.state.snapshotData)}
-              selectHub={this.selectHub}
+              data={this.getHubs(this.state.snapshotData)}
+              selectItem={this.selectItem}
             />
           </div>
           <div className="col-sm-2">
             <OrganizationFilter
-              organizations={this.getOrganizations(this.state.snapshotData)}
-              selectOrganization={this.selectOrganization}
+              data={this.getOrganizations(this.state.snapshotData)}
+              selectItem={this.selectItem}
             />
           </div>
           <div className="col-sm-2">
             <HouseholdFilter
-              households={this.getHouseholds(this.state.snapshotData)}
-              selectHousehold={this.selectHousehold}
+              data={this.getHouseholds(this.state.snapshotData)}
+              selectItem={this.selectItem}
             />
           </div>
           <div className="col-sm-3">

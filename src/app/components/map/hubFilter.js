@@ -7,10 +7,12 @@ const HubFilter = props => (
     </div>
     <select
       className="map-select"
-      onChange={e => props.selectHub(e.target.value)}
+      onChange={e => props.selectItem({ selectedHub: e.target.value })}
     >
-      <option value="">All</option>
-      {props.hubs.map(hub => (
+      <option selected="selected" value="">
+        All
+      </option>
+      {props.data.map(hub => (
         <option key={hub} value={hub}>
           {hub}
         </option>

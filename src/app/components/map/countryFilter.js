@@ -7,10 +7,12 @@ const CountryFilter = props => (
     </div>
     <select
       className="map-select"
-      onChange={e => props.selectCountry(e.target.value)}
+      onChange={e => props.selectItem({ selectedCountry: e.target.value })}
     >
-      <option value="">All</option>
-      {props.countries.map(country => (
+      <option selected="selected" value="">
+        All
+      </option>
+      {props.data.map(country => (
         <option key={country} value={country}>
           {country}
         </option>

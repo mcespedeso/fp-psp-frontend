@@ -7,10 +7,12 @@ const HouseholdFilter = props => (
     </div>
     <select
       className="map-select"
-      onChange={e => props.selectHousehold(e.target.value)}
+      onChange={e => props.selectItem({ selectedHousehold: e.target.value })}
     >
-      <option value="">All</option>
-      {props.households.map(household => (
+      <option selected="selected" value="">
+        All
+      </option>
+      {props.data.map(household => (
         <option key={household} value={household}>
           {household}
         </option>
