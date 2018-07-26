@@ -42,6 +42,9 @@ const Map = withScriptjs(
                     : marker) &&
                   (props.selectedHub.length
                     ? marker.hub === props.selectedHub
+                    : marker) &&
+                  (props.selectedCountry.length
+                    ? marker.country === props.selectedCountry
                     : marker)
               )
               .map(marker => (

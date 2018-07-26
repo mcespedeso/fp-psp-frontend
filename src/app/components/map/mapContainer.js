@@ -7,6 +7,7 @@ import HouseholdFilter from './householdFilter';
 import SurveyFilter from './surveyFilter';
 import OrganizationFilter from './organizationFilter';
 import HubFilter from './hubFilter';
+import CountryFilter from './countryFilter';
 
 class MapContainer extends Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class MapContainer extends Component {
       selectedColors: ['RED', 'YELLOW', 'GREEN'],
       selectedHousehold: '',
       selectedOrganization: '',
-      selectedHub: ''
+      selectedHub: '',
+      selectedCountry: ''
     };
     this.toggleSelectedColors = this.toggleSelectedColors.bind(this);
     this.selectSurvey = this.selectSurvey.bind(this);
@@ -30,6 +32,7 @@ class MapContainer extends Component {
     this.selectHousehold = this.selectHousehold.bind(this);
     this.selectOrganization = this.selectOrganization.bind(this);
     this.selectHub = this.selectHub.bind(this);
+    this.selectCountry = this.selectCountry.bind(this);
   }
 
   componentWillMount() {
@@ -64,23 +67,24 @@ class MapContainer extends Component {
     return data.map(survey => survey.title);
   }
 
-  selectSurvey(survey) {
-    this.setState({
-      selectedSurvey: survey,
-      selectedHousehold: '',
-      selectedOrganization: '',
-      selectedHub: ''
-    });
-    this.getIndicators(survey);
-    this.getData(survey);
-  }
-
   selectDefaultSurvey() {
     this.setState({
       selectedSurvey: this.props.surveyData
         ? this.props.surveyData[0].title
         : ''
     });
+  }
+
+  selectSurvey(survey) {
+    this.setState({
+      selectedSurvey: survey,
+      selectedHousehold: '',
+      selectedOrganization: '',
+      selectedHub: '',
+      selectedCountry: ''
+    });
+    this.getIndicators(survey);
+    this.getData(survey);
   }
 
   getIndicators(survey) {
@@ -132,13 +136,25 @@ class MapContainer extends Component {
   selectHub(hub) {
     this.setState({ selectedHub: hub });
   }
+
+  getCountries(data) {
+    return data
+      .map(country => country.family.organization.country.country)
+      .filter((country, i, self) => self.indexOf(country) === i);
+  }
+
+  selectCountry(country) {
+    this.setState({ selectedCountry: country });
+  }
+
   getMarkers(data, indicator) {
     return data.map(item => ({
       coordinates: item.economic_survey_data.familyUbication,
       color: item.indicator_survey_data[indicator],
       household: item.family.name,
       organization: item.family.organization.name,
-      hub: item.family.organization.application.name
+      hub: item.family.organization.application.name,
+      country: item.family.organization.country.country
     }));
   }
 
@@ -164,11 +180,18 @@ class MapContainer extends Component {
       markers,
       selectedHousehold,
       selectedOrganization,
-      selectedHub
+      selectedHub,
+      selectedCountry
     } = this.state;
     return (
       <div className="map-container ">
         <div className="row">
+          <div className="col-sm-2">
+            <CountryFilter
+              countries={this.getCountries(this.state.snapshotData)}
+              selectCountry={this.selectCountry}
+            />
+          </div>
           <div className="col-sm-2">
             <HubFilter
               hubs={this.getHubs(this.state.snapshotData)}
@@ -212,6 +235,7 @@ class MapContainer extends Component {
             selectedHousehold={selectedHousehold}
             selectedOrganization={selectedOrganization}
             selectedHub={selectedHub}
+            selectedCountry={selectedCountry}
             isMarkerShown
             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
               env.GOOGLEKEY
