@@ -5,6 +5,7 @@ const ColorPicker = props => (
   <div className="color-picker">
     {colors.map(color => (
       <div
+        key={color}
         className={`color-picker-item color-picker-item--${color.toLowerCase()} ${
           props.selectedColors.includes(color)
             ? 'color-picker-item--active'

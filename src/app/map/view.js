@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Template from './template.hbs';
 import SurveyCollection from './collection';
-import MapWrapper from '../components/map/mapWrapper';
+import MapContainer from '../components/map/mapContainer';
 
 export default Mn.View.extend({
   template: Template,
@@ -16,7 +16,7 @@ export default Mn.View.extend({
   },
   renderMap(surveyData) {
     const map = this.$el.find('#map')[0];
-    this.reactView = React.createElement(MapWrapper, {
+    this.reactView = React.createElement(MapContainer, {
       surveyData,
       token: this.app.getSession().attributes.access_token
     });

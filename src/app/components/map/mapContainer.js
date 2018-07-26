@@ -3,20 +3,25 @@ import React, { Component } from 'react';
 import env from '../../env';
 import Map from './mapComponent';
 import ColorPicker from './colorPicker';
+import HouseholdFilter from './householdFilter';
+import SurveyFilter from './surveyFilter';
 
-class MapWrapper extends Component {
+class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedSurvey: '',
       indicators: [],
       selectedIndicator: '',
-      searchIndicators: '',
+      searchIndicatorsQuery: '',
       snapshotData: [],
       markers: [],
       selectedColors: ['RED', 'YELLOW', 'GREEN']
     };
     this.toggleSelectedColors = this.toggleSelectedColors.bind(this);
+    this.selectSurvey = this.selectSurvey.bind(this);
+    this.searchIndicators = this.searchIndicators.bind(this);
+    this.selectIndicator = this.selectIndicator.bind(this);
   }
 
   componentWillMount() {
@@ -62,13 +67,7 @@ class MapWrapper extends Component {
     }));
   }
   searchIndicators(query) {
-    this.setState({ searchIndicators: query });
-  }
-  camelCasetoWords(str) {
-    return str
-      .replace(/([A-Z])/g, match => ` ${match}`)
-      .toLowerCase()
-      .replace(/^./, match => match.toUpperCase());
+    this.setState({ searchIndicatorsQuery: query });
   }
   getData(survey) {
     const id = this.props.surveyData
@@ -105,7 +104,7 @@ class MapWrapper extends Component {
     const {
       indicators,
       selectedIndicator,
-      searchIndicators,
+      searchIndicatorsQuery,
       selectedColors,
       markers
     } = this.state;
@@ -115,45 +114,17 @@ class MapWrapper extends Component {
           toggleSelectedColors={this.toggleSelectedColors}
           selectedColors={selectedColors}
         />
+        <HouseholdFilter />
         <div className="map-sidebar col-md-3">
-          <label>Survey</label>
-          <select
-            className="map-survey-select"
-            onChange={e => this.selectSurvey(e.target.value)}
-          >
-            {(surveyData || []).map(item => (
-              <option
-                key={item.id}
-                onClick={() => this.selectSurvey(item.title)}
-              >
-                {item.title}
-              </option>
-            ))}
-          </select>
-
-          <input
-            type="text"
-            placeholder="Search indicators"
-            onChange={e => this.searchIndicators(e.target.value)}
-            className="map-search"
+          <SurveyFilter
+            surveyData={surveyData}
+            selectSurvey={this.selectSurvey}
+            searchIndicators={this.searchIndicators}
+            searchIndicatorsQuery={searchIndicatorsQuery}
+            indicators={indicators}
+            selectIndicator={this.selectIndicator}
+            selectedIndicator={selectedIndicator}
           />
-          <div className="map-indicators">
-            {indicators
-              .filter(item =>
-                item.toLowerCase().includes(searchIndicators.toLowerCase())
-              )
-              .map(item => (
-                <div
-                  onClick={() => this.selectIndicator(item)}
-                  key={item}
-                  className={`map-indicator ${
-                    selectedIndicator === item ? 'active' : ''
-                  }`}
-                >
-                  {this.camelCasetoWords(item)}
-                </div>
-              ))}
-          </div>
         </div>
         <div className="map col-md-9">
           <Map
@@ -175,4 +146,4 @@ class MapWrapper extends Component {
   }
 }
 
-export default MapWrapper;
+export default MapContainer;
