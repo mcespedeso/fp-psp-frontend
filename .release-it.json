@@ -4,5 +4,6 @@
   },
   "github": {
     "release": false
-  }
+  },
+  "requireUpstream": false
 }
