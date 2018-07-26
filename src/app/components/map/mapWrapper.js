@@ -41,7 +41,6 @@ class MapWrapper extends Component {
       selectedIndicator: indicators[0]
     });
   }
-
   selectSurvey(survey) {
     this.setState({ selectedSurvey: survey });
     this.updateIndicators(survey);
@@ -68,7 +67,6 @@ class MapWrapper extends Component {
       .toLowerCase()
       .replace(/^./, match => match.toUpperCase());
   }
-
   getData(survey) {
     const id = this.props.surveyData
       ? this.props.surveyData.filter(item => item.title === survey)[0].id

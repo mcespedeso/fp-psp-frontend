@@ -476,15 +476,13 @@ div.fp-form-container {
 
 .card-menu-edit {
   background: url('/static/images/icon_editar_encuesta.png') no-repeat scroll
-    50% 8px;
+    60% 8px;
   background-size: 20px;
-  margin-right: 10px;
 }
 .card-menu-delete {
   background: url('/static/images/icon_eliminar_encuesta.png') no-repeat scroll
-    50% 8px;
+    40% 8px;
   background-size: 16px;
-  margin-left: 10px;
 }
 .card-image {
   padding: 20px 0;
@@ -787,6 +785,7 @@ table.dataTable.no-footer {
   display: block;
   margin: 0 auto;
 }
+
 .circle-small-text {
   color: #ffffff;
   text-align: center;
@@ -898,6 +897,22 @@ table.dataTable.no-footer {
 .card-user {
   border-radius: 50%;
   background-color: #95e78b;
+}
+
+.circle-user {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: block;
+  margin: 10px auto 0px auto;
+}
+
+.circle-user--active {
+  background-color: #7cd071;
+}
+
+.circle-user--inactive {
+  background-color: #bbb;
 }
 
 .circle-header {
@@ -1789,4 +1804,11 @@ img.current-language-flag {
 }
 .map-indicator.active {
   text-decoration: underline;
+}
+
+//INSTABUG ICON
+
+#initInstaBugLink {
+  background-color: #599dd1 !important;
+  margin-bottom: 30px;
 }

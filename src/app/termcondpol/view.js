@@ -20,6 +20,7 @@ export default Mn.View.extend({
     this.surveyId = options.surveyId;
     this.reAnswer = options.reAnswer;
     this.formData = options.formData;
+    this.locale = options.locale;
     if(this.app.getSession().attributes.user.application !== null) {
       this.currentApplicationId = this.app.getSession().attributes.user.application.id;
     }
@@ -54,7 +55,8 @@ export default Mn.View.extend({
       .fetch({
         data: {
           type: 'PRIV',
-          applicationId: this.currentApplicationId
+          applicationId: this.currentApplicationId,
+          locale: this.locale
         }
       })
       .then(() => {
@@ -63,7 +65,7 @@ export default Mn.View.extend({
       });
 
     Bn.history.navigate(
-      `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}`
+      `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}/${this.locale}`
     );
   },
 
@@ -102,7 +104,7 @@ export default Mn.View.extend({
           return;
         }
         Bn.history.navigate(
-          `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}`,
+          `/survey/${this.surveyId}/termcondpol/PRIV/${this.currentApplicationId}/${this.locale}`,
           true
         );
       } else if (

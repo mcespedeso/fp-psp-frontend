@@ -6,9 +6,11 @@ var ApplicationsStorage = Storage.extend({
   model: Model,
   collection: Collection,
   getSubHeaderItems(model) {
-    if(model && model.get('name')){
+    if (model && model.get('name')) {
       return {
-        mainItem: {name: `${model.get('name')} :: ${model.get('description')}`},
+        mainItem: {
+          name: `${model.get('name')} :: ${model.get('description')}`
+        },
         link: `/#management/applications/${model.get('id')}`
       };
     }
@@ -24,7 +26,6 @@ var ApplicationsStorage = Storage.extend({
         }
       ]
     };
-
   },
   getUserSubHeaderItems() {
     return {
@@ -36,10 +37,6 @@ var ApplicationsStorage = Storage.extend({
         {
           name: t(`subheader.management.users`),
           link: `/#management/users`
-        },
-        {
-          name: t(`subheader.management.manage-families`),
-          link: `/#management/manage-families`
         }
       ]
     };
