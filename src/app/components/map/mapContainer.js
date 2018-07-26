@@ -139,8 +139,8 @@ class MapContainer extends Component {
 
   getCountries(data) {
     return data
-      .map(country => country.family.organization.country.country)
-      .filter((country, i, self) => self.indexOf(country) === i);
+      .map(country => (country.family.organization.country || {}).country)
+      .filter((country, i, self) => country && self.indexOf(country) === i);
   }
 
   selectCountry(country) {
@@ -154,7 +154,7 @@ class MapContainer extends Component {
       household: item.family.name,
       organization: item.family.organization.name,
       hub: item.family.organization.application.name,
-      country: item.family.organization.country.country
+      country: (item.family.organization.country || {}).country
     }));
   }
 
