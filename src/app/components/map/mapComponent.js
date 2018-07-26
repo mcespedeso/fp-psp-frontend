@@ -41,9 +41,15 @@ const Map = withScriptjs(
                     ? marker.household === props.selectedHousehold
                     : marker
               )
+              .filter(
+                marker =>
+                  props.selectedOrganization.length
+                    ? marker.organization === props.selectedOrganization
+                    : marker
+              )
               .map(marker => (
                 <Marker
-                  key={Math.random(1000)}
+                  key={marker.coordinate}
                   icon={selectColor(marker.color)}
                   position={{
                     lat: Number(marker.coordinates.split(',')[0]),

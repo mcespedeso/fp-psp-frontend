@@ -13,9 +13,7 @@ const SurveyFilter = props => (
       className="map-survey-select"
       onChange={e => props.selectSurvey(e.target.value)}
     >
-      {props.surveys.map(item => (
-        <option key={Math.random(1000)}>{item}</option>
-      ))}
+      {props.surveys.map(item => <option key={item}>{item}</option>)}
     </select>
     <input
       type="text"

@@ -5,6 +5,7 @@ import Map from './mapComponent';
 import ColorPicker from './colorPicker';
 import HouseholdFilter from './householdFilter';
 import SurveyFilter from './surveyFilter';
+import OrganizationFilter from './organizationFilter';
 
 class MapContainer extends Component {
   constructor(props) {
@@ -17,13 +18,15 @@ class MapContainer extends Component {
       snapshotData: [],
       markers: [],
       selectedColors: ['RED', 'YELLOW', 'GREEN'],
-      selectedHousehold: ''
+      selectedHousehold: '',
+      selectedOrganization: ''
     };
     this.toggleSelectedColors = this.toggleSelectedColors.bind(this);
     this.selectSurvey = this.selectSurvey.bind(this);
     this.searchIndicators = this.searchIndicators.bind(this);
     this.selectIndicator = this.selectIndicator.bind(this);
     this.selectHousehold = this.selectHousehold.bind(this);
+    this.selectOrganization = this.selectOrganization.bind(this);
   }
 
   componentWillMount() {
@@ -59,7 +62,11 @@ class MapContainer extends Component {
   }
 
   selectSurvey(survey) {
-    this.setState({ selectedSurvey: survey, selectedHousehold: '' });
+    this.setState({
+      selectedSurvey: survey,
+      selectedHousehold: '',
+      selectedOrganization: ''
+    });
     this.getIndicators(survey);
     this.getData(survey);
   }
@@ -102,11 +109,19 @@ class MapContainer extends Component {
     this.setState({ selectedHousehold: household });
   }
 
+  getOrganizations(data) {
+    return data.map(organization => organization.family.organization.name);
+  }
+
+  selectOrganization(organization) {
+    this.setState({ selectedOrganization: organization });
+  }
   getMarkers(data, indicator) {
     return data.map(item => ({
       coordinates: item.economic_survey_data.familyUbication,
       color: item.indicator_survey_data[indicator],
-      household: item.family.name
+      household: item.family.name,
+      organization: item.family.organization.name
     }));
   }
 
@@ -130,12 +145,18 @@ class MapContainer extends Component {
       searchIndicatorsQuery,
       selectedColors,
       markers,
-      selectedHousehold
+      selectedHousehold,
+      selectedOrganization
     } = this.state;
-
     return (
       <div className="map-container ">
         <div className="row">
+          <div className="col-sm-2">
+            <OrganizationFilter
+              organizations={this.getOrganizations(this.state.snapshotData)}
+              selectOrganization={this.selectOrganization}
+            />
+          </div>
           <div className="col-sm-2">
             <HouseholdFilter
               households={this.getHouseholds(this.state.snapshotData)}
@@ -165,6 +186,7 @@ class MapContainer extends Component {
             selectedColors={selectedColors}
             markers={markers}
             selectedHousehold={selectedHousehold}
+            selectedOrganization={selectedOrganization}
             isMarkerShown
             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
               env.GOOGLEKEY
