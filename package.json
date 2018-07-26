@@ -109,18 +109,9 @@
     "select2": "^4.0.6-rc.1"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix --ignore-path .gitignore \"src/**/*.js\"",
-      "git add"
-    ],
-    "*.json": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.scss": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.js": ["eslint --fix --ignore-path .gitignore \"src/**/*.js\"", "git add"],
+    "*.json": ["prettier --write", "git add"],
+    "*.scss": ["prettier --write", "git add"]
   },
   "scripts": {
     "start": "gulp",
@@ -139,6 +130,7 @@
     "deploy:UK": "scotty --spa --source ./dist --region eu-west-2 --bucket aws-website-povertystoplight-london --force --nocdn",
     "deploy:US-DEMO": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-demo --force --nocdn",
     "release": "generate-release",
+    "release-new": "release-it --dry-run",
     "auto-changelog": "auto-changelog && git add CHANGELOG.md"
   }
 }
