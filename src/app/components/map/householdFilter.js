@@ -1,8 +1,18 @@
 import React from 'react';
 
-const HouseholdFilter = () => (
+const HouseholdFilter = props => (
   <div>
-    <div>householdfilter</div>
+    <div>
+      <label>Household</label>
+    </div>
+    <select onChange={e => props.selectHousehold(e.target.value)}>
+      <option value="">All</option>
+      {props.households.map(household => (
+        <option key={household} value={household}>
+          {household}
+        </option>
+      ))}
+    </select>
   </div>
 );
 

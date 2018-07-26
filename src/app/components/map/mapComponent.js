@@ -19,19 +19,14 @@ const selectColor = color => {
     case 'RED':
       return red;
     default:
+      return '';
   }
 };
 
 const Map = withScriptjs(
   withGoogleMap(props => (
     <div>
-      <GoogleMap
-        defaultZoom={3}
-        defaultCenter={{ lat: 20, lng: -15 }}
-        options={{
-          maxZoom: 10
-        }}
-      >
+      <GoogleMap defaultZoom={3} defaultCenter={{ lat: 20, lng: -15 }}>
         {props.isMarkerShown && (
           <div>
             {props.markers
@@ -40,9 +35,15 @@ const Map = withScriptjs(
                   marker.coordinates &&
                   props.selectedColors.includes(marker.color)
               )
+              .filter(
+                marker =>
+                  props.selectedHousehold.length
+                    ? marker.household === props.selectedHousehold
+                    : marker
+              )
               .map(marker => (
                 <Marker
-                  key={marker.coordinates}
+                  key={Math.random(1000)}
                   icon={selectColor(marker.color)}
                   position={{
                     lat: Number(marker.coordinates.split(',')[0]),
