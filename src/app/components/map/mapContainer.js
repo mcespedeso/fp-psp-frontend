@@ -6,6 +6,7 @@ import ColorPicker from './colorPicker';
 import HouseholdFilter from './householdFilter';
 import SurveyFilter from './surveyFilter';
 import OrganizationFilter from './organizationFilter';
+import HubFilter from './hubFilter';
 
 class MapContainer extends Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class MapContainer extends Component {
       markers: [],
       selectedColors: ['RED', 'YELLOW', 'GREEN'],
       selectedHousehold: '',
-      selectedOrganization: ''
+      selectedOrganization: '',
+      selectedHub: ''
     };
     this.toggleSelectedColors = this.toggleSelectedColors.bind(this);
     this.selectSurvey = this.selectSurvey.bind(this);
@@ -27,6 +29,7 @@ class MapContainer extends Component {
     this.selectIndicator = this.selectIndicator.bind(this);
     this.selectHousehold = this.selectHousehold.bind(this);
     this.selectOrganization = this.selectOrganization.bind(this);
+    this.selectHub = this.selectHub.bind(this);
   }
 
   componentWillMount() {
@@ -65,7 +68,8 @@ class MapContainer extends Component {
     this.setState({
       selectedSurvey: survey,
       selectedHousehold: '',
-      selectedOrganization: ''
+      selectedOrganization: '',
+      selectedHub: ''
     });
     this.getIndicators(survey);
     this.getData(survey);
@@ -110,18 +114,31 @@ class MapContainer extends Component {
   }
 
   getOrganizations(data) {
-    return data.map(organization => organization.family.organization.name);
+    return data
+      .map(organization => organization.family.organization.name)
+      .filter((organization, i, self) => self.indexOf(organization) === i);
   }
 
   selectOrganization(organization) {
     this.setState({ selectedOrganization: organization });
+  }
+
+  getHubs(data) {
+    return data
+      .map(hub => hub.family.organization.application.name)
+      .filter((hub, i, self) => self.indexOf(hub) === i);
+  }
+
+  selectHub(hub) {
+    this.setState({ selectedHub: hub });
   }
   getMarkers(data, indicator) {
     return data.map(item => ({
       coordinates: item.economic_survey_data.familyUbication,
       color: item.indicator_survey_data[indicator],
       household: item.family.name,
-      organization: item.family.organization.name
+      organization: item.family.organization.name,
+      hub: item.family.organization.application.name
     }));
   }
 
@@ -146,11 +163,18 @@ class MapContainer extends Component {
       selectedColors,
       markers,
       selectedHousehold,
-      selectedOrganization
+      selectedOrganization,
+      selectedHub
     } = this.state;
     return (
       <div className="map-container ">
         <div className="row">
+          <div className="col-sm-2">
+            <HubFilter
+              hubs={this.getHubs(this.state.snapshotData)}
+              selectHub={this.selectHub}
+            />
+          </div>
           <div className="col-sm-2">
             <OrganizationFilter
               organizations={this.getOrganizations(this.state.snapshotData)}
@@ -187,6 +211,7 @@ class MapContainer extends Component {
             markers={markers}
             selectedHousehold={selectedHousehold}
             selectedOrganization={selectedOrganization}
+            selectedHub={selectedHub}
             isMarkerShown
             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
               env.GOOGLEKEY

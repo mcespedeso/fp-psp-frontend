@@ -33,23 +33,20 @@ const Map = withScriptjs(
               .filter(
                 marker =>
                   marker.coordinates &&
-                  props.selectedColors.includes(marker.color)
-              )
-              .filter(
-                marker =>
-                  props.selectedHousehold.length
+                  props.selectedColors.includes(marker.color) &&
+                  (props.selectedHousehold.length
                     ? marker.household === props.selectedHousehold
-                    : marker
-              )
-              .filter(
-                marker =>
-                  props.selectedOrganization.length
+                    : marker) &&
+                  (props.selectedOrganization.length
                     ? marker.organization === props.selectedOrganization
-                    : marker
+                    : marker) &&
+                  (props.selectedHub.length
+                    ? marker.hub === props.selectedHub
+                    : marker)
               )
               .map(marker => (
                 <Marker
-                  key={marker.coordinate}
+                  key={marker.coordinates}
                   icon={selectColor(marker.color)}
                   position={{
                     lat: Number(marker.coordinates.split(',')[0]),
