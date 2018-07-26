@@ -1812,3 +1812,64 @@ img.current-language-flag {
   background-color: #599dd1 !important;
   margin-bottom: 30px;
 }
+
+//MAP COLOR PICKER
+
+.color-picker {
+  padding: 15px 20px 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.color-picker-item {
+  cursor: pointer;
+  display: inline-block;
+  padding: 11px 12px 9px 28px;
+  width: 100px;
+  font-size: 12px;
+  color: #626262;
+  font-weight: normal;
+  border: 1px solid #e1e3e6;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.color-picker-item--active {
+  color: #fff;
+  background: #50aa47;
+}
+
+.color-picker-item:first-child {
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+}
+
+.color-picker-item:last-child {
+  border-left: none;
+  border-radius: 0 3px 3px 0;
+}
+
+.color-picker-item:after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  top: 50%;
+  margin-top: -5px;
+  left: 10px;
+}
+
+.color-picker-item--red:after {
+  background: #e0504c;
+}
+
+.color-picker-item--yellow::after {
+  background: #efcb3a;
+}
+
+.color-picker-item--green:after {
+  background: #409737;
+}

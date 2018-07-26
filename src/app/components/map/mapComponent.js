@@ -21,31 +21,40 @@ const selectColor = color => {
     default:
   }
 };
+
 const Map = withScriptjs(
   withGoogleMap(props => (
-    <GoogleMap
-      defaultZoom={3}
-      defaultCenter={{ lat: 20, lng: -15 }}
-      options={{
-        maxZoom: 10
-      }}
-    >
-      {props.isMarkerShown && (
-        <div>
-          {console.log(props.markers)}
-          {props.markers.map(marker => (
-            <Marker
-              key={marker.coordinates}
-              icon={selectColor(marker.color)}
-              position={{
-                lat: Number(marker.coordinates.split(', ')[0]),
-                lng: Number(marker.coordinates.split(', ')[1])
-              }}
-            />
-          ))}
-        </div>
-      )}
-    </GoogleMap>
+    <div>
+      {console.log(props)}
+      <GoogleMap
+        defaultZoom={3}
+        defaultCenter={{ lat: 20, lng: -15 }}
+        options={{
+          maxZoom: 10
+        }}
+      >
+        {props.isMarkerShown && (
+          <div>
+            {props.markers
+              .filter(
+                marker =>
+                  marker.coordinates &&
+                  props.selectedColors.includes(marker.color)
+              )
+              .map(marker => (
+                <Marker
+                  key={marker.coordinates}
+                  icon={selectColor(marker.color)}
+                  position={{
+                    lat: Number(marker.coordinates.split(',')[0]),
+                    lng: Number(marker.coordinates.split(',')[1])
+                  }}
+                />
+              ))}
+          </div>
+        )}
+      </GoogleMap>
+    </div>
   ))
 );
 

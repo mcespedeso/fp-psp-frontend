@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import env from '../../env';
 import Map from './mapComponent';
+import ColorPicker from './colorPicker';
 
 class MapWrapper extends Component {
   constructor(props) {
@@ -12,8 +13,10 @@ class MapWrapper extends Component {
       selectedIndicator: '',
       searchIndicators: '',
       snapshotData: [],
-      markers: []
+      markers: [],
+      selectedColors: ['RED', 'YELLOW', 'GREEN']
     };
+    this.toggleSelectedColors = this.toggleSelectedColors.bind(this);
   }
 
   componentWillMount() {
@@ -86,13 +89,33 @@ class MapWrapper extends Component {
       )
     );
   }
-
+  toggleSelectedColors(color) {
+    if (this.state.selectedColors.includes(color)) {
+      this.setState({
+        selectedColors: this.state.selectedColors.filter(item => item !== color)
+      });
+    } else {
+      this.setState({
+        selectedColors: [...this.state.selectedColors, color]
+      });
+    }
+  }
   render() {
     console.log(this.state);
     const { surveyData } = this.props;
-    const { indicators, searchIndicators } = this.state;
+    const {
+      indicators,
+      selectedIndicator,
+      searchIndicators,
+      selectedColors,
+      markers
+    } = this.state;
     return (
       <div className="map-container">
+        <ColorPicker
+          toggleSelectedColors={this.toggleSelectedColors}
+          selectedColors={selectedColors}
+        />
         <div className="map-sidebar col-md-3">
           <label>Survey</label>
           <select
@@ -125,7 +148,7 @@ class MapWrapper extends Component {
                   onClick={() => this.selectIndicator(item)}
                   key={item}
                   className={`map-indicator ${
-                    this.state.selectedIndicator === item ? 'active' : ''
+                    selectedIndicator === item ? 'active' : ''
                   }`}
                 >
                   {this.camelCasetoWords(item)}
@@ -135,7 +158,8 @@ class MapWrapper extends Component {
         </div>
         <div className="map col-md-9">
           <Map
-            markers={this.state.markers}
+            selectedColors={selectedColors}
+            markers={markers}
             isMarkerShown
             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
               env.GOOGLEKEY
