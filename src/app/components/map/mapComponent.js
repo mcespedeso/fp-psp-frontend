@@ -25,7 +25,6 @@ const selectColor = color => {
 const Map = withScriptjs(
   withGoogleMap(props => (
     <div>
-      {console.log(props)}
       <GoogleMap
         defaultZoom={3}
         defaultCenter={{ lat: 20, lng: -15 }}

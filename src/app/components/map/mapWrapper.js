@@ -101,7 +101,6 @@ class MapWrapper extends Component {
     }
   }
   render() {
-    console.log(this.state);
     const { surveyData } = this.props;
     const {
       indicators,
