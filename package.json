@@ -130,7 +130,7 @@
     "deploy:UK": "scotty --spa --source ./dist --region eu-west-2 --bucket aws-website-povertystoplight-london --force --nocdn",
     "deploy:US-DEMO": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-demo --force --nocdn",
     "release": "generate-release",
-    "release-new": "git checkout origin/master && git pull origin/master && release-it --dry-run -n",
+    "release-new": "git checkout master && git pull master && release-it --dry-run -n",
     "auto-changelog": "auto-changelog && git add CHANGELOG.md"
   }
 }
