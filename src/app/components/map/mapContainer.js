@@ -137,6 +137,8 @@ class MapContainer extends Component {
       coordinates: item.economic_survey_data.familyUbication,
       color: item.indicator_survey_data[indicator],
       household: item.family.name,
+      householdID: item.family.familyId,
+      date: item.created_at,
       organization: item.family.organization.name,
       hub: item.family.organization.application.name,
       country: (item.family.organization.country || {}).country
@@ -171,7 +173,7 @@ class MapContainer extends Component {
     return (
       <div className="map-container">
         <div className="row">
-          <div className="col-sm-3">
+          <div className="col-sm-2">
             <CountryFilter
               data={this.getCountries(this.state.snapshotData)}
               selectItem={this.selectItem}
@@ -204,7 +206,7 @@ class MapContainer extends Component {
         </div>
 
         <div className="row">
-          <div className="map-sidebar col-md-3">
+          <div className="map-sidebar col-md-2">
             <SurveyFilter
               surveys={this.getSurveys(surveyData)}
               selectSurvey={this.selectSurvey}
@@ -215,7 +217,7 @@ class MapContainer extends Component {
               selectedIndicator={selectedIndicator}
             />
           </div>
-          <div className="map col-md-9">
+          <div className="map col-md-10">
             <Map
               selectedColors={selectedColors}
               markers={markers}

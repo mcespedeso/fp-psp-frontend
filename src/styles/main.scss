@@ -1845,7 +1845,15 @@ img.current-language-flag {
   text-align: center;
 }
 
-.color-picker-item--active {
+.color-picker-item--red.color-picker-item--active {
+  color: #fff;
+  background: rgba(204, 0, 0, 1);
+}
+.color-picker-item--yellow.color-picker-item--active {
+  color: #fff;
+  background: rgba(226, 181, 3, 1);
+}
+.color-picker-item--green.color-picker-item--active {
   color: #fff;
   background: #7cd071;
 }

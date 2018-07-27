@@ -9,7 +9,7 @@ const CountryFilter = props => (
       className="map-select"
       onChange={e => props.selectItem({ selectedCountry: e.target.value })}
     >
-      <option selected="selected" value="">
+      <option default value="">
         All
       </option>
       {props.data.map(country => (
