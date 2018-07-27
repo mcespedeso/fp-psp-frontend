@@ -9,7 +9,7 @@ var ReportsStorage = Storage.extend({
       return {
         navigationItems: [
           {
-            name: 'Snapshots Report',
+            name: t('report.snapshot.title'),
             link: `/#reports/snapshots`
           }
           // {

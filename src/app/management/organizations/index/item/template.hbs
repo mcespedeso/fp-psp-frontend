@@ -5,14 +5,14 @@
       <p class="text-left text-blue" title="{{{organization.name}}}">{{organization.name}}</p>
     </div>
     {{else}}
-    <div class="col-sm-11">
+    <div class="col-sm-10">
       <a href="#management/organizations/{{organization.id}}">
         <p class="text-left text-blue" title="{{{organization.name}}}">{{organization.name}}</p>
       </a>
     </div>
     {{/if}}
     {{#unless isRoot}}
-    <div class="col-sm-1">
+    <div class="col-sm-2">
     <div class="col-sm-6">
       <a class="card-menu-item card-menu-edit" href="#"></a>
     </div>

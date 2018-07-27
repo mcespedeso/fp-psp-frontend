@@ -3,37 +3,101 @@ import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker
+  Marker,
+  InfoWindow
 } from 'react-google-maps';
+import moment from 'moment';
 
 import red from '../../../static/images/red-dot.svg';
 import green from '../../../static/images/green-dot.svg';
 import yellow from '../../../static/images/yellow-dot.svg';
 
-const Map = withScriptjs(
-  withGoogleMap(props => (
-    <GoogleMap
-      defaultZoom={7}
-      defaultCenter={{ lat: -23.442503, lng: -58.443832 }}
-      options={{
-        maxZoom: 10
-      }}
-    >
-      {props.isMarkerShown && (
-        <div>
-          <Marker
-            icon={green}
-            position={{ lat: -23.442503, lng: -58.443832 }}
-          />
-          <Marker icon={red} position={{ lat: -22.442503, lng: -59.443832 }} />
-          <Marker
-            icon={yellow}
-            position={{ lat: -21.442503, lng: -58.443832 }}
-          />
-        </div>
-      )}
-    </GoogleMap>
-  ))
-);
+const selectColor = color => {
+  switch (color) {
+    case 'GREEN':
+      return green;
+    case 'YELLOW':
+      return yellow;
+    case 'RED':
+      return red;
+    default:
+      return '';
+  }
+};
 
-export default Map;
+class Map extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showInfoIndex: null
+    };
+    this.toggleInfo = this.toggleInfo.bind(this);
+  }
+
+  showInfo(i) {
+    this.setState({ showInfoIndex: i });
+  }
+
+  toggleInfo() {
+    this.setState({ showInfoIndex: null });
+  }
+
+  render() {
+    const { props } = this;
+    const { showInfoIndex } = this.state;
+    return (
+      <div>
+        <GoogleMap defaultZoom={3} defaultCenter={{ lat: 20, lng: -15 }}>
+          {props.isMarkerShown && (
+            <div>
+              {props.markers
+                .filter(
+                  marker =>
+                    marker.coordinates &&
+                    props.selectedColors.includes(marker.color) &&
+                    (props.selectedHousehold.length
+                      ? marker.household === props.selectedHousehold
+                      : marker) &&
+                    (props.selectedOrganization.length
+                      ? marker.organization === props.selectedOrganization
+                      : marker) &&
+                    (props.selectedHub.length
+                      ? marker.hub === props.selectedHub
+                      : marker) &&
+                    (props.selectedCountry.length
+                      ? marker.country === props.selectedCountry
+                      : marker)
+                )
+                .map((marker, i) => (
+                  <Marker
+                    key={marker.coordinates}
+                    icon={selectColor(marker.color)}
+                    position={{
+                      lat: Number(marker.coordinates.split(',')[0]),
+                      lng: Number(marker.coordinates.split(',')[1])
+                    }}
+                    onClick={() => {
+                      this.showInfo(i);
+                    }}
+                  >
+                    {showInfoIndex === i && (
+                      <InfoWindow onCloseClick={this.toggleInfo}>
+                        <div>
+                          <a href={`/#families/${marker.householdID}`}>
+                            <h5>{marker.household}</h5>
+                          </a>
+                          <div>{moment(marker.date).format('DD/MM/YYYY')}</div>
+                        </div>
+                      </InfoWindow>
+                    )}
+                  </Marker>
+                ))}
+            </div>
+          )}
+        </GoogleMap>
+      </div>
+    );
+  }
+}
+
+export default withScriptjs(withGoogleMap(Map));
