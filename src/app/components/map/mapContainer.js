@@ -164,8 +164,6 @@ class MapContainer extends Component {
   }
 
   render() {
-    console.log(this.state);
-    console.log(this.props.token);
     const { surveyData } = this.props;
     const filters = [
       {
