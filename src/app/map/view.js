@@ -18,7 +18,8 @@ export default Mn.View.extend({
     const map = this.$el.find('#map')[0];
     this.reactView = React.createElement(MapContainer, {
       surveyData,
-      token: this.app.getSession().attributes.access_token
+      token: this.app.getSession().attributes.access_token,
+      user: this.app.getSession().attributes.user.authorities[0].authority
     });
     ReactDOM.unmountComponentAtNode(map);
     ReactDOM.render(this.reactView, map);

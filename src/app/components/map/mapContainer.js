@@ -165,32 +165,43 @@ class MapContainer extends Component {
 
   render() {
     console.log(this.state);
+    console.log(this.props.token);
     const { surveyData } = this.props;
     const filters = [
       {
         label: 'Country',
         data: this.getCountries(this.state.snapshotData),
-        itemToSelect: 'selectedCountry'
+        itemToSelect: 'selectedCountry',
+        access: ['ROLE_ROOT', 'ROLE_HUB_ADMIN', 'ROLE_APP_ADMIN']
       },
       {
         label: 'Hub',
         data: this.getHubs(this.state.snapshotData),
-        itemToSelect: 'selectedHub'
+        itemToSelect: 'selectedHub',
+        access: ['ROLE_ROOT']
       },
       {
         label: 'Organization',
         data: this.getOrganizations(this.state.snapshotData),
-        itemToSelect: 'selectedOrganization'
-      },
-      {
-        label: 'Household',
-        data: this.getHouseholds(this.state.snapshotData),
-        itemToSelect: 'selectedHousehold'
+        itemToSelect: 'selectedOrganization',
+        access: ['ROLE_ROOT', 'ROLE_HUB_ADMIN']
       },
       {
         label: 'User',
         data: this.getUsers(this.state.snapshotData),
-        itemToSelect: 'selectedUser'
+        itemToSelect: 'selectedUser',
+        access: ['ROLE_ROOT', 'ROLE_HUB_ADMIN', 'ROLE_APP_ADMIN']
+      },
+      {
+        label: 'Household',
+        data: this.getHouseholds(this.state.snapshotData),
+        itemToSelect: 'selectedHousehold',
+        access: [
+          'ROLE_ROOT',
+          'ROLE_HUB_ADMIN',
+          'ROLE_APP_ADMIN',
+          'ROLE_SURVEY_USER'
+        ]
       }
     ];
     const {
@@ -208,16 +219,18 @@ class MapContainer extends Component {
     return (
       <div className="map-container">
         <div className="row">
-          {filters.map(item => (
-            <div key={item.label} className="col-sm-2">
-              <Filter
-                label={item.label}
-                data={item.data}
-                selectItem={this.selectItem}
-                itemToSelect={item.itemToSelect}
-              />
-            </div>
-          ))}
+          {filters
+            .filter(item => item.access.includes(this.props.user))
+            .map(item => (
+              <div key={item.label} className="col-sm-2">
+                <Filter
+                  label={item.label}
+                  data={item.data}
+                  selectItem={this.selectItem}
+                  itemToSelect={item.itemToSelect}
+                />
+              </div>
+            ))}
           <div className="col-sm-2">
             <ColorPicker
               toggleSelectedColors={this.toggleSelectedColors}
