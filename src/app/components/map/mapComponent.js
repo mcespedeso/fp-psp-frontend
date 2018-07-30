@@ -66,6 +66,9 @@ class Map extends React.Component {
                       : marker) &&
                     (props.selectedCountry.length
                       ? marker.country === props.selectedCountry
+                      : marker) &&
+                    (props.selectedUser.length
+                      ? marker.user === props.selectedUser
                       : marker)
                 )
                 .map((marker, i) => (

@@ -3,11 +3,8 @@ import React, { Component } from 'react';
 import env from '../../env';
 import Map from './mapComponent';
 import ColorPicker from './colorPicker';
-import HouseholdFilter from './householdFilter';
 import SurveyFilter from './surveyFilter';
-import OrganizationFilter from './organizationFilter';
-import HubFilter from './hubFilter';
-import CountryFilter from './countryFilter';
+import Filter from './filterComponent';
 
 class MapContainer extends Component {
   constructor(props) {
@@ -23,7 +20,8 @@ class MapContainer extends Component {
       selectedHousehold: '',
       selectedOrganization: '',
       selectedHub: '',
-      selectedCountry: ''
+      selectedCountry: '',
+      selectedUser: ''
     };
     this.toggleSelectedColors = this.toggleSelectedColors.bind(this);
     this.selectSurvey = this.selectSurvey.bind(this);
@@ -82,7 +80,8 @@ class MapContainer extends Component {
       selectedHousehold: '',
       selectedOrganization: '',
       selectedHub: '',
-      selectedCountry: ''
+      selectedCountry: '',
+      selectedUser: ''
     });
     this.getIndicators(survey);
     this.getData(survey);
@@ -132,6 +131,12 @@ class MapContainer extends Component {
       .filter((country, i, self) => country && self.indexOf(country) === i);
   }
 
+  getUsers(data) {
+    return data
+      .map(user => user.user.username)
+      .filter((user, i, self) => user && self.indexOf(user) === i);
+  }
+
   getMarkers(data, indicator) {
     return data.map(item => ({
       coordinates: item.economic_survey_data.familyUbication,
@@ -141,7 +146,8 @@ class MapContainer extends Component {
       date: item.created_at,
       organization: item.family.organization.name,
       hub: item.family.organization.application.name,
-      country: (item.family.organization.country || {}).country
+      country: (item.family.organization.country || {}).country,
+      user: item.user.username
     }));
   }
 
@@ -158,7 +164,35 @@ class MapContainer extends Component {
   }
 
   render() {
+    console.log(this.state);
     const { surveyData } = this.props;
+    const filters = [
+      {
+        label: 'Country',
+        data: this.getCountries(this.state.snapshotData),
+        itemToSelect: 'selectedCountry'
+      },
+      {
+        label: 'Hub',
+        data: this.getHubs(this.state.snapshotData),
+        itemToSelect: 'selectedHub'
+      },
+      {
+        label: 'Organization',
+        data: this.getOrganizations(this.state.snapshotData),
+        itemToSelect: 'selectedOrganization'
+      },
+      {
+        label: 'Household',
+        data: this.getHouseholds(this.state.snapshotData),
+        itemToSelect: 'selectedHousehold'
+      },
+      {
+        label: 'User',
+        data: this.getUsers(this.state.snapshotData),
+        itemToSelect: 'selectedUser'
+      }
+    ];
     const {
       indicators,
       selectedIndicator,
@@ -168,36 +202,23 @@ class MapContainer extends Component {
       selectedHousehold,
       selectedOrganization,
       selectedHub,
-      selectedCountry
+      selectedCountry,
+      selectedUser
     } = this.state;
     return (
       <div className="map-container">
         <div className="row">
+          {filters.map(item => (
+            <div key={item.label} className="col-sm-2">
+              <Filter
+                label={item.label}
+                data={item.data}
+                selectItem={this.selectItem}
+                itemToSelect={item.itemToSelect}
+              />
+            </div>
+          ))}
           <div className="col-sm-2">
-            <CountryFilter
-              data={this.getCountries(this.state.snapshotData)}
-              selectItem={this.selectItem}
-            />
-          </div>
-          <div className="col-sm-2">
-            <HubFilter
-              data={this.getHubs(this.state.snapshotData)}
-              selectItem={this.selectItem}
-            />
-          </div>
-          <div className="col-sm-2">
-            <OrganizationFilter
-              data={this.getOrganizations(this.state.snapshotData)}
-              selectItem={this.selectItem}
-            />
-          </div>
-          <div className="col-sm-2">
-            <HouseholdFilter
-              data={this.getHouseholds(this.state.snapshotData)}
-              selectItem={this.selectItem}
-            />
-          </div>
-          <div className="col-sm-3">
             <ColorPicker
               toggleSelectedColors={this.toggleSelectedColors}
               selectedColors={selectedColors}
@@ -225,6 +246,7 @@ class MapContainer extends Component {
               selectedOrganization={selectedOrganization}
               selectedHub={selectedHub}
               selectedCountry={selectedCountry}
+              selectedUser={selectedUser}
               isMarkerShown
               googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
                 env.GOOGLEKEY

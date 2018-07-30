@@ -1,13 +1,13 @@
 import React from 'react';
 
-const CountryFilter = props => (
+const Filter = props => (
   <div>
     <div>
-      <label>Country</label>
+      <label>{props.label}</label>
     </div>
     <select
       className="map-select"
-      onChange={e => props.selectItem({ selectedCountry: e.target.value })}
+      onChange={e => props.selectItem({ [props.itemToSelect]: e.target.value })}
     >
       <option default value="">
         All
@@ -21,4 +21,4 @@ const CountryFilter = props => (
   </div>
 );
 
-export default CountryFilter;
+export default Filter;
