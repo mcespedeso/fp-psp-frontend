@@ -109,32 +109,85 @@ class MapContainer extends Component {
     this.setState({ searchIndicatorsQuery: query });
   }
 
-  getHouseholds(data) {
-    return data.map(household => household.family.name);
-  }
+  getDropdownItems(data, dropdownItem) {
+    switch (dropdownItem) {
+      case 'country':
+        return data
+          .map(country => (country.family.organization.country || {}).country)
+          .filter((country, i, self) => country && self.indexOf(country) === i);
 
-  getOrganizations(data) {
-    return data
-      .map(organization => organization.family.organization.name)
-      .filter((organization, i, self) => self.indexOf(organization) === i);
-  }
+      case 'hub':
+        return data
+          .filter(
+            item =>
+              this.state.selectedCountry.length
+                ? (item.family.organization.country || {}).country ===
+                  this.state.selectedCountry
+                : item
+          )
+          .map(hub => hub.family.organization.application.name)
+          .filter((hub, i, self) => self.indexOf(hub) === i);
 
-  getHubs(data) {
-    return data
-      .map(hub => hub.family.organization.application.name)
-      .filter((hub, i, self) => self.indexOf(hub) === i);
-  }
+      case 'organization':
+        return data
+          .filter(
+            item =>
+              (this.state.selectedHub.length
+                ? item.family.organization.application.name ===
+                  this.state.selectedHub
+                : item) &&
+              (this.state.selectedCountry.length
+                ? (item.family.organization.country || {}).country ===
+                  this.state.selectedCountry
+                : item)
+          )
+          .map(organization => organization.family.organization.name)
+          .filter((organization, i, self) => self.indexOf(organization) === i);
 
-  getCountries(data) {
-    return data
-      .map(country => (country.family.organization.country || {}).country)
-      .filter((country, i, self) => country && self.indexOf(country) === i);
-  }
+      case 'user':
+        return data
+          .filter(
+            item =>
+              (this.state.selectedOrganization.length
+                ? item.family.organization.name ===
+                  this.state.selectedOrganization
+                : item) &&
+              (this.state.selectedHub.length
+                ? item.family.organization.application.name ===
+                  this.state.selectedHub
+                : item) &&
+              (this.state.selectedCountry.length
+                ? (item.family.organization.country || {}).country ===
+                  this.state.selectedCountry
+                : item)
+          )
+          .map(user => user.user.username)
+          .filter((user, i, self) => user && self.indexOf(user) === i);
 
-  getUsers(data) {
-    return data
-      .map(user => user.user.username)
-      .filter((user, i, self) => user && self.indexOf(user) === i);
+      case 'household':
+        return data
+          .filter(
+            item =>
+              (this.state.selectedUser.length
+                ? item.user.username === this.state.selectedUser
+                : item) &&
+              (this.state.selectedOrganization.length
+                ? item.family.organization.name ===
+                  this.state.selectedOrganization
+                : item) &&
+              (this.state.selectedHub.length
+                ? item.family.organization.application.name ===
+                  this.state.selectedHub
+                : item) &&
+              (this.state.selectedCountry.length
+                ? (item.family.organization.country || {}).country ===
+                  this.state.selectedCountry
+                : item)
+          )
+          .map(item => item.family.name);
+
+      default:
+    }
   }
 
   getMarkers(data, indicator) {
@@ -168,31 +221,31 @@ class MapContainer extends Component {
     const filters = [
       {
         label: 'Country',
-        data: this.getCountries(this.state.snapshotData),
+        data: this.getDropdownItems(this.state.snapshotData, 'country'),
         itemToSelect: 'selectedCountry',
         access: ['ROLE_ROOT', 'ROLE_HUB_ADMIN', 'ROLE_APP_ADMIN']
       },
       {
         label: 'Hub',
-        data: this.getHubs(this.state.snapshotData),
+        data: this.getDropdownItems(this.state.snapshotData, 'hub'),
         itemToSelect: 'selectedHub',
         access: ['ROLE_ROOT']
       },
       {
         label: 'Organization',
-        data: this.getOrganizations(this.state.snapshotData),
+        data: this.getDropdownItems(this.state.snapshotData, 'organization'),
         itemToSelect: 'selectedOrganization',
         access: ['ROLE_ROOT', 'ROLE_HUB_ADMIN']
       },
       {
         label: 'User',
-        data: this.getUsers(this.state.snapshotData),
+        data: this.getDropdownItems(this.state.snapshotData, 'user'),
         itemToSelect: 'selectedUser',
         access: ['ROLE_ROOT', 'ROLE_HUB_ADMIN', 'ROLE_APP_ADMIN']
       },
       {
         label: 'Household',
-        data: this.getHouseholds(this.state.snapshotData),
+        data: this.getDropdownItems(this.state.snapshotData, 'household'),
         itemToSelect: 'selectedHousehold',
         access: [
           'ROLE_ROOT',
