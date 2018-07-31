@@ -34,10 +34,10 @@ class MapContainer extends Component {
   }
   componentDidMount() {
     this.getIndicators(this.state.selectedSurvey);
-    this.getData(this.state.selectedSurvey);
+    this.getSnapshotData(this.state.selectedSurvey);
   }
 
-  getData(survey) {
+  getSnapshotData(survey) {
     const id = this.props.surveyData
       ? this.props.surveyData.filter(item => item.title === survey)[0].id
       : null;
@@ -104,7 +104,7 @@ class MapContainer extends Component {
       selectedUser: ''
     });
     this.getIndicators(survey);
-    this.getData(survey);
+    this.getSnapshotData(survey);
   }
 
   getIndicators(survey) {
@@ -128,35 +128,6 @@ class MapContainer extends Component {
     this.setState({ searchIndicatorsQuery: query });
   }
 
-  getDropdownItems(data, dropdownItem) {
-    switch (dropdownItem) {
-      case 'country':
-        return this.filterData(data, 'country')
-          .map(country => (country.family.organization.country || {}).country)
-          .filter((country, i, self) => country && self.indexOf(country) === i);
-
-      case 'hub':
-        return this.filterData(data, 'hub')
-          .map(hub => hub.family.organization.application.name)
-          .filter((hub, i, self) => self.indexOf(hub) === i);
-
-      case 'organization':
-        return this.filterData(data, 'organization')
-          .map(organization => organization.family.organization.name)
-          .filter((organization, i, self) => self.indexOf(organization) === i);
-
-      case 'user':
-        return this.filterData(data, 'user')
-          .map(user => user.user.username)
-          .filter((user, i, self) => user && self.indexOf(user) === i);
-
-      case 'household':
-        return this.filterData(data, 'household').map(item => item.family.name);
-
-      default:
-    }
-  }
-
   getMarkers(data, indicator) {
     return this.filterData(data).map(item => ({
       coordinates: item.economic_survey_data.familyUbication,
@@ -178,36 +149,43 @@ class MapContainer extends Component {
     }
   }
 
-  render() {
-    const { surveyData } = this.props;
-    const filters = [
+  createFilters(data) {
+    return [
       {
         label: 'Country',
-        data: this.getDropdownItems(this.state.snapshotData, 'country'),
+        data: this.filterData(data, 'country')
+          .map(country => (country.family.organization.country || {}).country)
+          .filter((country, i, self) => country && self.indexOf(country) === i),
         itemToSelect: 'selectedCountry',
         access: ['ROLE_ROOT', 'ROLE_HUB_ADMIN', 'ROLE_APP_ADMIN']
       },
       {
         label: 'Hub',
-        data: this.getDropdownItems(this.state.snapshotData, 'hub'),
+        data: this.filterData(data, 'hub')
+          .map(hub => hub.family.organization.application.name)
+          .filter((hub, i, self) => self.indexOf(hub) === i),
         itemToSelect: 'selectedHub',
         access: ['ROLE_ROOT']
       },
       {
         label: 'Organization',
-        data: this.getDropdownItems(this.state.snapshotData, 'organization'),
+        data: this.filterData(data, 'organization')
+          .map(organization => organization.family.organization.name)
+          .filter((organization, i, self) => self.indexOf(organization) === i),
         itemToSelect: 'selectedOrganization',
         access: ['ROLE_ROOT', 'ROLE_HUB_ADMIN']
       },
       {
         label: 'User',
-        data: this.getDropdownItems(this.state.snapshotData, 'user'),
+        data: this.filterData(data, 'user')
+          .map(user => user.user.username)
+          .filter((user, i, self) => user && self.indexOf(user) === i),
         itemToSelect: 'selectedUser',
         access: ['ROLE_ROOT', 'ROLE_HUB_ADMIN', 'ROLE_APP_ADMIN']
       },
       {
         label: 'Household',
-        data: this.getDropdownItems(this.state.snapshotData, 'household'),
+        data: this.filterData(data, 'household').map(item => item.family.name),
         itemToSelect: 'selectedHousehold',
         access: [
           'ROLE_ROOT',
@@ -217,6 +195,10 @@ class MapContainer extends Component {
         ]
       }
     ];
+  }
+
+  render() {
+    const { surveyData } = this.props;
     const {
       indicators,
       selectedIndicator,
@@ -226,10 +208,10 @@ class MapContainer extends Component {
     return (
       <div className="map-container">
         <div className="row">
-          {filters
+          {this.createFilters(this.state.snapshotData)
             .filter(item => item.access.includes(this.props.user))
             .map(item => (
-              <div key={item.label} className="col-sm-2">
+              <div key={item.label} className="col-lg-2">
                 <Filter
                   label={item.label}
                   data={item.data}
@@ -238,7 +220,7 @@ class MapContainer extends Component {
                 />
               </div>
             ))}
-          <div className="col-sm-2">
+          <div className="col-xl-2">
             <ColorPicker
               toggleSelectedColors={this.toggleSelectedColors}
               selectedColors={selectedColors}
