@@ -15,7 +15,6 @@ class MapContainer extends Component {
       selectedIndicator: '',
       searchIndicatorsQuery: '',
       snapshotData: [],
-      markers: [],
       selectedColors: ['RED', 'YELLOW', 'GREEN'],
       selectedHousehold: '',
       selectedOrganization: '',
@@ -51,8 +50,7 @@ class MapContainer extends Component {
     }).then(response =>
       response.json().then(res =>
         this.setState({
-          snapshotData: res,
-          markers: this.getMarkers(res, this.state.selectedIndicator)
+          snapshotData: res
         })
       )
     );
@@ -72,6 +70,28 @@ class MapContainer extends Component {
         ? this.props.surveyData[0].title
         : ''
     });
+  }
+
+  filterData(data, filter) {
+    return data.filter(
+      item =>
+        (this.state.selectedCountry.length && filter !== 'country'
+          ? (item.family.organization.country || {}).country ===
+            this.state.selectedCountry
+          : item) &&
+        (this.state.selectedHub.length && filter !== 'hub'
+          ? item.family.organization.application.name === this.state.selectedHub
+          : item) &&
+        (this.state.selectedOrganization.length && filter !== 'organization'
+          ? item.family.organization.name === this.state.selectedOrganization
+          : item) &&
+        (this.state.selectedUser.length && filter !== 'user'
+          ? item.user.username === this.state.selectedUser
+          : item) &&
+        (this.state.selectedHousehold.length && filter !== 'household'
+          ? item.family.name === this.state.selectedHousehold
+          : item)
+    );
   }
 
   selectSurvey(survey) {
@@ -100,8 +120,7 @@ class MapContainer extends Component {
 
   selectIndicator(indicator) {
     this.setState({
-      selectedIndicator: indicator,
-      markers: this.getMarkers(this.state.snapshotData, indicator)
+      selectedIndicator: indicator
     });
   }
 
@@ -112,95 +131,38 @@ class MapContainer extends Component {
   getDropdownItems(data, dropdownItem) {
     switch (dropdownItem) {
       case 'country':
-        return data
+        return this.filterData(data, 'country')
           .map(country => (country.family.organization.country || {}).country)
           .filter((country, i, self) => country && self.indexOf(country) === i);
 
       case 'hub':
-        return data
-          .filter(
-            item =>
-              this.state.selectedCountry.length
-                ? (item.family.organization.country || {}).country ===
-                  this.state.selectedCountry
-                : item
-          )
+        return this.filterData(data, 'hub')
           .map(hub => hub.family.organization.application.name)
           .filter((hub, i, self) => self.indexOf(hub) === i);
 
       case 'organization':
-        return data
-          .filter(
-            item =>
-              (this.state.selectedHub.length
-                ? item.family.organization.application.name ===
-                  this.state.selectedHub
-                : item) &&
-              (this.state.selectedCountry.length
-                ? (item.family.organization.country || {}).country ===
-                  this.state.selectedCountry
-                : item)
-          )
+        return this.filterData(data, 'organization')
           .map(organization => organization.family.organization.name)
           .filter((organization, i, self) => self.indexOf(organization) === i);
 
       case 'user':
-        return data
-          .filter(
-            item =>
-              (this.state.selectedOrganization.length
-                ? item.family.organization.name ===
-                  this.state.selectedOrganization
-                : item) &&
-              (this.state.selectedHub.length
-                ? item.family.organization.application.name ===
-                  this.state.selectedHub
-                : item) &&
-              (this.state.selectedCountry.length
-                ? (item.family.organization.country || {}).country ===
-                  this.state.selectedCountry
-                : item)
-          )
+        return this.filterData(data, 'user')
           .map(user => user.user.username)
           .filter((user, i, self) => user && self.indexOf(user) === i);
 
       case 'household':
-        return data
-          .filter(
-            item =>
-              (this.state.selectedUser.length
-                ? item.user.username === this.state.selectedUser
-                : item) &&
-              (this.state.selectedOrganization.length
-                ? item.family.organization.name ===
-                  this.state.selectedOrganization
-                : item) &&
-              (this.state.selectedHub.length
-                ? item.family.organization.application.name ===
-                  this.state.selectedHub
-                : item) &&
-              (this.state.selectedCountry.length
-                ? (item.family.organization.country || {}).country ===
-                  this.state.selectedCountry
-                : item)
-          )
-          .map(item => item.family.name);
+        return this.filterData(data, 'household').map(item => item.family.name);
 
       default:
     }
   }
 
   getMarkers(data, indicator) {
-    return data.map(item => ({
+    return this.filterData(data).map(item => ({
       coordinates: item.economic_survey_data.familyUbication,
       color: item.indicator_survey_data[indicator],
-      household: item.family.name,
       householdID: item.family.familyId,
-      date: item.created_at,
-      organization: item.family.organization.name,
-      hub: item.family.organization.application.name,
-      country: (item.family.organization.country || {}).country,
-      user: item.user.username
+      date: item.created_at
     }));
   }
 
@@ -259,13 +221,7 @@ class MapContainer extends Component {
       indicators,
       selectedIndicator,
       searchIndicatorsQuery,
-      selectedColors,
-      markers,
-      selectedHousehold,
-      selectedOrganization,
-      selectedHub,
-      selectedCountry,
-      selectedUser
+      selectedColors
     } = this.state;
     return (
       <div className="map-container">
@@ -305,12 +261,10 @@ class MapContainer extends Component {
           <div className="map col-md-10">
             <Map
               selectedColors={selectedColors}
-              markers={markers}
-              selectedHousehold={selectedHousehold}
-              selectedOrganization={selectedOrganization}
-              selectedHub={selectedHub}
-              selectedCountry={selectedCountry}
-              selectedUser={selectedUser}
+              markers={this.getMarkers(
+                this.filterData(this.state.snapshotData),
+                this.state.selectedIndicator
+              )}
               isMarkerShown
               googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
                 env.GOOGLEKEY

@@ -54,22 +54,7 @@ class Map extends React.Component {
                 .filter(
                   marker =>
                     marker.coordinates &&
-                    props.selectedColors.includes(marker.color) &&
-                    (props.selectedHousehold.length
-                      ? marker.household === props.selectedHousehold
-                      : marker) &&
-                    (props.selectedOrganization.length
-                      ? marker.organization === props.selectedOrganization
-                      : marker) &&
-                    (props.selectedHub.length
-                      ? marker.hub === props.selectedHub
-                      : marker) &&
-                    (props.selectedCountry.length
-                      ? marker.country === props.selectedCountry
-                      : marker) &&
-                    (props.selectedUser.length
-                      ? marker.user === props.selectedUser
-                      : marker)
+                    props.selectedColors.includes(marker.color)
                 )
                 .map((marker, i) => (
                   <Marker
