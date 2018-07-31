@@ -332,10 +332,6 @@ div.fp-form-container {
   border: 1px solid #efefef;
   @include BoxShadowHelper(1);
   transition: 0.25s box-shadow;
-  &:focus,
-  &:hover {
-    @include BoxShadowHelper(2);
-  }
 }
 .card-inverse .card-img-overlay {
   background-color: rgba(#333, 0.85);
