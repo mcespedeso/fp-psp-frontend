@@ -22,9 +22,6 @@ body.landing {
   width: 100%;
   padding: 0;
   margin: 0;
-  background-image: url('/static/images/BG_login.jpg');
-  background-size: cover;
-  background-attachment: fixed;
 }
 
 #content {
@@ -1233,12 +1230,20 @@ div.fp-form-container {
   width: 100%;
   height: 40px;
 }
+#platform-name {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
 #loginbox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: #ffffff;
-  margin-top: 30px;
   border-radius: 2px;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 0 70px;
   > img {
     width: 25%;
     margin-top: 45px;
@@ -1249,13 +1254,15 @@ div.fp-form-container {
     border-top: 1px solid #efefef;
   }
   .panel {
-    margin-bottom: 25px;
     -webkit-box-shadow: none;
     box-shadow: none;
+    margin: auto;
   }
   .form-group {
+    margin: auto;
     margin-bottom: 25px;
   }
+
   .form-control {
     background-color: #f6f6f6;
     border-radius: 2px;
@@ -1710,6 +1717,8 @@ div.fp-form-container {
   font-family: 'Helvetica';
   font-weight: 400;
   font-size: 14px;
+  text-align: right;
+  margin-bottom: 40px;
 }
 
 #locales li {

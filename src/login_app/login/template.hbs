@@ -1,44 +1,35 @@
 
 <div class="bg-login"></div>
 <div class="container">
-  <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-
+  <div id="loginbox" class="col-md-4 col-sm-6 col-xs-10">
     <img src="/static/images/icon_logo_PSL.png" class="center-block login-logo" alt="PS" />
     <hr />
-    {{!-- <label class="center-block" id="platform-name" for=""></label> --}}
-    <div class="panel">
-      <div class="panel-heading">
-        <div class="panel-body">
-          <form role="form" id="loginform" class="col-sm-9 col-sm-offset-2">
-            <div style="display:none;" id="login-alert"></div>
-            <div class="form-group login">
-              <input id="login-username" type="text" class="form-control " name="username" value="" placeholder="{{$t 'login.username'}}">
-            </div><div class="form-group login">
-              <input id="login-password" type="password" class="form-control " name="password" placeholder="{{$t 'login.password'}}">
-            </div>
-            <div class="form-group recovery" style="display:none;">
-              <label for="">{{$t 'login.reset-title'}}</label>
-              <input id="login-email" type="email" class="form-control" name="email" placeholder="{{$t 'login.email'}}">
-            </div>
-            <div class="has-spinner">
-              <button id="btn-login" href="#" class="btn btn-login login">{{$t 'login.login'}} </button>
-              <button id="btn-recovery" href="#" class="btn btn-login recovery" style="display:none;">{{$t 'login.reset-pass'}}</button>
-            </div>
-          </form>
-        </div>
-        <br>
-        <a id="link-email">
-           <div class="pull-right link-email login" style="margin-top: -21px;margin-right: 71px;text-decoration: none;cursor: pointer;">{{$t 'login.forgot-pass'}}</div>
-        </a>​
-        <a id="link-form" class="hidden" href="https://www.surveymonkey.com/r/CheckOutPovertyStoplightPlatform">
-           <div class="pull-right link-email login"  style="margin-right: 71px;text-decoration: none;cursor: pointer;">{{$t 'login.go-form'}}</div>
-        </a>​
-        <a id="back-login" >
-            <div class="pull-right link-email recovery" style="display:none;margin-top: -21px;margin-right: 71px;text-decoration: none;cursor: pointer;">{{$t 'login.back-login'}}</div>
-        </a>
+    <form role="form" id="loginform">
+      <div style="display:none;" id="login-alert"></div>
+      <div class="form-group login">
+        <input id="login-username" type="text" class="form-control " name="username" value="" placeholder="{{$t 'login.username'}}">
+      </div><div class="form-group login">
+        <input id="login-password" type="password" class="form-control " name="password" placeholder="{{$t 'login.password'}}">
       </div>
-      {{!-- <div class="panel-footer text-center" id="platform-name"></div> --}}
-    </div>
+      <div class="form-group recovery" style="display:none;">
+        <label for="">{{$t 'login.reset-title'}}</label>
+        <input id="login-email" type="email" class="form-control" name="email" placeholder="{{$t 'login.email'}}">
+      </div>
+      <div class="has-spinner">
+        <button id="btn-login" href="#" class="btn btn-login login">{{$t 'login.login'}} </button>
+        <button id="btn-recovery" href="#" class="btn btn-login recovery" style="display:none;">{{$t 'login.reset-pass'}}</button>
+      </div>
+    </form>
+    <br>
+    <a id="link-email">
+       <div class=" link-email login" >{{$t 'login.forgot-pass'}}</div>
+    </a>​
+    <a id="link-form" class="hidden" href="https://www.surveymonkey.com/r/CheckOutPovertyStoplightPlatform">
+       <div class="pull-right link-email login"  style="margin-right: 71px;text-decoration: none;cursor: pointer;">{{$t 'login.go-form'}}</div>
+    </a>​
+    <a id="back-login" >
+        <div class="pull-right link-email recovery" style="display:none;margin-top: -21px;margin-right: 71px;text-decoration: none;cursor: pointer;">{{$t 'login.back-login'}}</div>
+    </a>
     <div class="pull-right" id="platform-name" style="color: #788c9a !important; font-size: 14px !important;">
       <span>{{{appPlatform}}}</span>
     </div>
