@@ -1,6 +1,6 @@
 {
   "name": "fp-psp-frentend",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Frontend para el FP-PSP-SERVER del semáforo de la pobreza",
   "main": "main.js",
   "devDependencies": {
@@ -110,18 +110,9 @@
     "select2": "^4.0.6-rc.1"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix --ignore-path .gitignore \"src/**/*.js\"",
-      "git add"
-    ],
-    "*.json": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.scss": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.js": ["eslint --fix --ignore-path .gitignore \"src/**/*.js\"", "git add"],
+    "*.json": ["prettier --write", "git add"],
+    "*.scss": ["prettier --write", "git add"]
   },
   "scripts": {
     "start": "gulp",
