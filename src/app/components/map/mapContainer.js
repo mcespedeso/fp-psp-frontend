@@ -133,6 +133,7 @@ class MapContainer extends Component {
       coordinates: item.economic_survey_data.familyUbication,
       color: item.indicator_survey_data[indicator],
       householdID: item.family.familyId,
+      household: item.family.name,
       date: item.created_at
     }));
   }
