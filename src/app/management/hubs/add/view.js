@@ -19,13 +19,13 @@ export default Mn.View.extend({
     'change #input-image-file': 'previewFile',
     'click #submit': 'handleSubmit',
     'change #input-terms-file': 'handleTermsCondFile',
-    'change #input-pol-file': 'handlePolFile'
+    'change #input-pol-file': 'handlePolFile',
+    'change #term-cond-pol-locale': 'getDefaultValues'
   },
   initialize(options) {
     this.app = options.app;
     this.model = options.model || new Model();
     this.termCondPolModel = new TermCondPolModel();
-    this.getDefaultValues();
   },
   serializeData() {
     return {
@@ -38,12 +38,13 @@ export default Mn.View.extend({
     };
   },
   getDefaultValues() {
-    var self = this
-    this.getLastTermCondPol('TC', 0).then(result => {
-      self.termCond = result;
+    var self = this;
+    var selectLocale = this.$el.find('#term-cond-pol-locale').val();
+    this.getLastTermCondPol('TC', 0, selectLocale).then(result => {
+      self.defaultTermCond = result
     });
-    this.getLastTermCondPol('PRIV', 0).then(result => {
-      self.privacyPolicy = result;
+    this.getLastTermCondPol('PRIV', 0, selectLocale).then(result => {
+      self.defaultPrivacyPolicy = result
     });
   },
   onRender() {
@@ -58,6 +59,7 @@ export default Mn.View.extend({
       .parent()
       .addClass('subActive');
 
+    this.getDefaultValues();
   },
   selectFile() {
     this.$el.find('#input-image-file').click();
@@ -116,31 +118,33 @@ export default Mn.View.extend({
   },
   saveTermsCondPol(appId) {
     var self = this;
+    var selectLocale = this.$el.find('#term-cond-pol-locale').val();
     this.termCondPolModel.set('version', '0.0.1');
     this.termCondPolModel.set('year', moment().year());
     this.termCondPolModel.set('id_application', appId);
 
-    this.getLastTermCondPol('TC', appId).then(html => {
+    this.getLastTermCondPol('TC', appId, selectLocale).then(html => {
       self.termCondPolModel.set('type_cod', 'TC');
+      self.termCondPolModel.set('locale', selectLocale);
 
-      if(!html) {
+      if(!html && !self.termCond) {
         self.saveAsNewOne('TC');
         return;
       }
-      self.termCondPolModel.set('html', self.termCond);
-      if(self.termCond !== html) {
+      if(self.termCond && self.termCond !== html && self.termCond !== self.defaultTermCond) {
+        self.termCondPolModel.set('html', self.termCond);
         self.termCondPolModel.save({});
       }
     }).then(() => {
       self.termCondPolModel.set('type_cod', 'PRIV');
 
-      this.getLastTermCondPol('PRIV', appId).then(html => {
-        if(!html) {
+      this.getLastTermCondPol('PRIV', appId, selectLocale).then(html => {
+        if(!html && !self.privacyPolicy) {
           self.saveAsNewOne('PRIV');
           return;
         }
-        self.termCondPolModel.set('html', self.privacyPolicy);
-        if(self.termCond !== html) {
+        if(self.privacyPolicy && self.privacyPolicy !== html && self.privacyPolicy !== self.defaultPrivacyPolicy) {
+          self.termCondPolModel.set('html', self.privacyPolicy);
           self.termCondPolModel.save({});
         }
       });
@@ -148,16 +152,22 @@ export default Mn.View.extend({
   },
   saveAsNewOne(type) {
     if(type === 'TC') {
-      this.termCondPolModel.set('html', this.termCond);
+      if (!this.defaultTermCond){
+        this.defaultTermCond = "<html></html>";
+      }
+      this.termCondPolModel.set('html', this.defaultTermCond);
     } else  {
-      this.termCondPolModel.set('html', this.privacyPolicy);
+      if (!this.defaultPrivacyPolicy){
+        this.defaultPrivacyPolicy = "<html></html>";
+      }
+      this.termCondPolModel.set('html', this.defaultPrivacyPolicy);
     }
     this.termCondPolModel.save({});
   },
-  getLastTermCondPol(type, applicationId) {
+  getLastTermCondPol(type, applicationId, locale) {
     var model = new LastTermCondPolModel();
     return model.fetch({
-      data: {type, applicationId},
+      data: {type, applicationId, locale},
     }).then((response) => response.html).catch(response => {
       if(response.status === 400) {
         return false;
@@ -178,7 +188,6 @@ export default Mn.View.extend({
     this.model.set('file', this.file);
 
     let errors = this.model.validate();
-    
     if (errors) {
       errors.forEach(error => {
         FlashesService.request('add', {

@@ -84,6 +84,7 @@
     "created": "Created at"
   },
   "header": {
+    "map": "Map",
     "reports": "Reports",
     "surveys": "Surveys",
     "faqs": "FAQs",
@@ -218,10 +219,8 @@
       "not-answer": "Select your answer!",
       "answer-validation": "You must first accept the terms and conditions!"
     },
-    "templates": {
-      "term-cond": "<h1>Terms and Conditions</h1><div class='text-box'>Please Read Carefully Before Using This Application</div>",
-      "pol": "<h1>Privacy Policies</h1><div class='text-box'>Please Read Carefully Before Using This Application</div>"
-    }
+    "select-locale": "Language",
+    "select-display-language": "Select the displayed language of the Terms and Conditions/Privacy Policy"
   },
   "family": {
     "search": {
@@ -336,6 +335,7 @@
       "title": "Find a user"
     },
     "card": {
+      "name": "Name",
       "email": "Email",
       "organization": "Organization",
       "hub": "Hub",
@@ -379,13 +379,13 @@
   "footer": {
     "version": {
       "title": "WEB VERSION",
-      "name": "POVERTY STOPLIGHT",
+      "name": "STOPLIGHT",
       "platform": "PLATFORM"
     }
   },
   "report": {
     "snapshot": {
-      "title": "Stoplights Taken Report",
+      "title": "Snapshots Report",
       "search": {
         "date-from": "Date From",
         "date-to": "Date To",
@@ -398,7 +398,7 @@
       },
       "buttons": {
         "export": "Download Report",
-        "download-csv": "Download CSV"
+        "download-csv": "Download CSV Report"
       },
       "status": "Status",
       "survey": "Survey",

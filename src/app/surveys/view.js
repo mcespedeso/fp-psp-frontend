@@ -10,13 +10,13 @@ export default Mn.View.extend({
     surveysContent: '#surveys-content'
   },
   initialize(app) {
-    this.app = app.app
+    this.app = app.app;
   },
   onRender() {
     let headerItems;
-    if(this.app.getSession().userHasRole('ROLE_SURVEY_USER')){
+    if (this.app.getSession().userHasRole('ROLE_SURVEY_USER')) {
       headerItems = storage.getUserSubHeaderItems();
-    }else{
+    } else {
       headerItems = storage.getSubHeaderItems();
     }
     this.app.updateSubHeader(headerItems);
@@ -29,6 +29,7 @@ export default Mn.View.extend({
     });
     this.getRegion('surveysContent').show(listView);
   },
+
   add(model) {
     const addView = new AddView({
       model,

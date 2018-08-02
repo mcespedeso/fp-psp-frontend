@@ -9,7 +9,8 @@ const allMenuItems = {
     { name: 'families', link: '#families' },
     { name: 'surveys', link: '#surveys' },
     { name: 'faqs', link: '#faqs' },
-    { name: 'management', link: '#management' }
+    { name: 'management', link: '#management' },
+    { name: 'map', link: '#map' }
   ]
 };
 
@@ -38,12 +39,11 @@ var HeaderStorage = Storage.extend({
         mainItem: { link: `#${session.getLoggedUserHomeRoute()}` },
         navigationItems: allMenuItems.navigationItems
           .filter(item => !(item.link.indexOf('#collaborators') !== -1))
-	        .filter(item => !(item.link === '#applications'))
+          .filter(item => !(item.link === '#applications'))
           .map(item => {
             item.name = t(`header.${item.name}`);
             return item;
           })
-
       };
 
       return new Model(items);

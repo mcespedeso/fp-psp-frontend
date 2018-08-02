@@ -1,21 +1,22 @@
 import Mn from 'backbone.marionette';
 import ItemView from './item/view';
-import Model from "../model";
-import FlashesService from "../../../flashes/service";
-import ModalService from "../../../modal/service";
+import Model from '../model';
+import FlashesService from '../../../flashes/service';
+import ModalService from '../../../modal/service';
 
 export default Mn.CollectionView.extend({
   childView: ItemView,
   initialize(options) {
     this.app = options.app;
     this.collection = options.collection;
-    this.isRoot = this.app?this.app.getSession().userHasRole('ROLE_ROOT') === true:false;
+    this.isRoot = this.app
+      ? this.app.getSession().userHasRole('ROLE_ROOT') === true
+      : false;
   },
   childViewOptions() {
     return {
-      className: 'col-lg-2 col-md-4 col-sm-6 col-xs-12',
       isRoot: this.isRoot
-    }
+    };
   },
   className: 'list-container ',
   childViewEvents: {
@@ -25,7 +26,7 @@ export default Mn.CollectionView.extend({
     this.$el.find('#search').focus();
   },
   onChildDeleteModel(childView) {
-    if(this.isRoot){
+    if (this.isRoot) {
       return;
     }
     let self = this;

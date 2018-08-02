@@ -6,8 +6,6 @@ import Template from '../template.hbs';
 import SnapshotsTemplate from '../show/snapshot/template.hbs';
 import UnderConstrucionTemplate from '../../utils/under_construction_template.hbs';
 import storage from '../storage';
-import TermCondPolView from '../../termcondpol/view';
-import TermCondPolModel from '../../termcondpol/model';
 import session from "../../../common/session";
 import ParameterModel from "../../parameter/model";
 
@@ -37,7 +35,7 @@ export default Mn.View.extend({
         .addClass('subActive');
     }
 
-    if (session.userHasRole('ROLE_SURVEY_USER')) {
+    if (session.userHasRole('ROLE_SURVEY_USER') && this.model.attributes.snapshot_indicators.survey_id) {
       this.$el.find('#newSurvey').show();
     }
 
@@ -104,32 +102,15 @@ export default Mn.View.extend({
     return data;
   },
   newSurvey(event) {
+    var surveyId = this.model.attributes.snapshot_indicators.survey_id;
+    var currentApplicationId = this.currentApplicationId;
     event.preventDefault();
-    let self = this;
+
     this.app.getSession().save({termCond: 0, priv: 0});
     this.app.getSession().save({reAnswer: false, formData: null});
-    const model = new TermCondPolModel();
-    const app = this.app;
-    model
-      .fetch({
-        data: {
-          type: 'TC',
-          surveyId: `${this.model.attributes.snapshot_indicators.survey_id}`,
-          familyId: `${this.model.attributes.snapshot_indicators.family.familyId}`,
-          applicationId: self.currentApplicationId
-        }
-      })
-      .then(() => {
-        this.app.showViewOnRoute(new TermCondPolView({
-           app,
-           model,
-           surveyId: this.model.attributes.snapshot_indicators.survey_id,
-           reAnswer: true,
-           formData: self.getJsonData()
-
-        }));
-      });
-    Bn.history.navigate(`/survey/${this.model.attributes.snapshot_indicators.survey_id}/termcondpol/TC/${this.currentApplicationId}`);
+    if(surveyId){
+      Bn.history.navigate(`/survey/${surveyId}/termcondpol/${currentApplicationId}`, true);
+    }
   },
   getParameter(){
     const self = this;
@@ -153,7 +134,7 @@ export default Mn.View.extend({
   setPriorities() {
     Bn.history.navigate(
       `families/${this.model.attributes.id}/snapshots/
-      ${this.model.attributes.snapshot_indicators.snapshot_economic_id}/indicators`, 
+      ${this.model.attributes.snapshot_indicators.snapshot_economic_id}/indicators`,
       true);
   }
 });

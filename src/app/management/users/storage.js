@@ -6,7 +6,6 @@ var UsersStorage = Storage.extend({
   model: Model,
   collection: Collection,
   getSubHeaderItems() {
-
     return {
       navigationItems: [
         {
@@ -30,10 +29,6 @@ var UsersStorage = Storage.extend({
         {
           name: t(`subheader.management.users`),
           link: `/#management/users`
-        },
-        {
-          name: t(`subheader.management.manage-families`),
-          link: `/#management/manage-families`
         }
       ]
     };
@@ -59,7 +54,7 @@ var UsersStorage = Storage.extend({
         }
       ]
     };
-  },
+  }
 });
 
 export default new UsersStorage();

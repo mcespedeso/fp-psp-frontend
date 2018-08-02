@@ -179,12 +179,12 @@ export default Mn.View.extend({
         });
       })
       .catch(response => {
-        this.model.set(this.originalModel.attributes);
-        if (modelIsNew){
-          outcome = 'user.form.add-failed';
-        }else{
-          outcome = 'user.form.edit-failed';
+        if (!modelIsNew){
+          this.model.set(this.originalModel.attributes);
         }
+
+        outcome = response.responseJSON.message;
+
         // this.model.fetch();
         if (response.status === 400) {
           FlashesService.request('add', {

@@ -95,6 +95,7 @@
     "organizations": "Organizaciones",
     "hubs": "Hubs",
     "management": "Administración",
+    "map": "Mapa",
     "locale": {
       "es_PY": "Español",
       "en_US": "Inglés",
@@ -218,10 +219,8 @@
       "not-answer": "Seleccione su respuesta",
       "answer-validation": "Primero debe aceptar los términos y condiciones"
     },
-    "templates": {
-      "term-cond": "<h1>Terms and Conditions</h1><div class='text-box'>Please Read Carefully Before Using This Application</div>",
-      "pol": "<h1>Privacy Policies</h1><div class='text-box'>Please Read Carefully Before Using This Application</div>"
-    }
+    "select-locale": "Idioma",
+    "select-display-language": "Seleccione el idioma de los Términos y Condiciones/Política de Privacidad"
   },
   "family": {
     "search": {
@@ -336,6 +335,7 @@
       "title": "Buscar un usuario"
     },
     "card": {
+      "name": "Nombre",
       "email": "Correo electrónico",
       "organization": "Organización",
       "hub": "Hub",
@@ -398,7 +398,7 @@
       },
       "buttons": {
         "export": "Descargar Reporte",
-        "download-csv": "Descargar CSV"
+        "download-csv": "Descargar Reporte CSV"
       },
       "status": "Estado",
       "survey": "Encuesta",

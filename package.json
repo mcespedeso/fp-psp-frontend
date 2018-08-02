@@ -1,6 +1,6 @@
 {
   "name": "fp-psp-frentend",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Frontend para el FP-PSP-SERVER del semáforo de la pobreza",
   "main": "main.js",
   "devDependencies": {
@@ -64,6 +64,7 @@
     "node-sass": "^4.7.2",
     "prettier": "^1.9.2",
     "prettier-eslint": "^8.2.0",
+    "release-it": "^7.4.8",
     "run-sequence": "^1.2.2",
     "sass-loader": "^4.1.1",
     "scottyjs": "^1.10.0",
@@ -91,8 +92,6 @@
     "bootstrap": "^3.3.7",
     "c3": "^0.4.18",
     "codemirror": "^5.32.0",
-    "create-react-class": "^15.5.2",
-    "d3": "^4.12.2",
     "datatables.net": "^1.10.16",
     "datatables.net-bs": "^1.10.16",
     "eonasdan-bootstrap-datetimepicker": "^4.17.43",
@@ -100,14 +99,14 @@
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
     "moment-timezone": "^0.5.14",
+    "node-polyglot": "^2.2.2",
     "nprogress": "^0.2.0",
-    "parsleyjs": "^2.7.2",
     "react": "^15.6.2",
     "react-datetime": "^2.11.1",
     "react-dom": "^15.6.2",
     "react-gmaps": "^1.7.0",
+    "react-google-maps": "^9.4.5",
     "react-jsonschema-form": "^0.50.1",
-    "node-polyglot": "^2.2.2",
     "select2": "^4.0.6-rc.1"
   },
   "lint-staged": {
@@ -132,6 +131,7 @@
     "deploy:UK": "scotty --spa --source ./dist --region eu-west-2 --bucket aws-website-povertystoplight-london --force --nocdn",
     "deploy:US-DEMO": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-demo --force --nocdn",
     "release": "generate-release",
+    "release-new": "release-it --dry-run -n",
     "auto-changelog": "auto-changelog && git add CHANGELOG.md"
   }
 }

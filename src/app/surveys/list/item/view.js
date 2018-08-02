@@ -71,7 +71,7 @@ export default Mn.View.extend({
       if (!session.userHasRole('ROLE_USER') && !session.userHasRole('ROLE_SURVEY_USER')) {
         return;
       }
-    Bn.history.navigate(`/survey/${this.model.attributes.id}/termcondpol/TC/${this.currentApplicationId}`, true);
+    Bn.history.navigate(`/survey/${this.model.attributes.id}/termcondpol/${this.currentApplicationId}`, true);
   },
 
   handleAnswer(event) {

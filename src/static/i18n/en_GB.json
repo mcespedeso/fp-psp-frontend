@@ -86,6 +86,7 @@
   "header": {
     "reports": "Reports",
     "surveys": "Surveys",
+    "map": "Map",
     "faqs": "FAQs",
     "collaborators": "Collaborators",
     "families": "Households",
@@ -148,7 +149,7 @@
       "print-header": "Life Map",
       "messages": {
         "not-save": "Your personal information has not been saved in the platform",
-        "finish": "Your stoplight was completed successfully. The household's code is \"%{code}\" "
+        "finish": "Your Stoplight was completed successfully. The household's code is \"%{code}\" "
       }
     },
     "priority": {
@@ -218,10 +219,8 @@
       "not-answer": "Select your answer!",
       "answer-validation": "You must first accept the terms and conditions!"
     },
-    "templates": {
-      "term-cond": "<h1>Terms and Conditions</h1><div class='text-box'>Please Read Carefully Before Using This Application</div>",
-      "pol": "<h1>Privacy Policies</h1><div class='text-box'>Please Read Carefully Before Using This Application</div>"
-    }
+    "select-locale": "Language",
+    "select-display-language": "Select the displayed language of the Terms and Conditions/Privacy Policy"
   },
   "family": {
     "search": {
@@ -342,7 +341,8 @@
       "role": "Role",
       "true": "True",
       "false": "False",
-      "active": "Active"
+      "active": "Active",
+      "name": "Name"
     },
     "form": {
       "edit-title": "Edit user",
@@ -379,13 +379,13 @@
   "footer": {
     "version": {
       "title": "WEB VERSION",
-      "name": "POVERTY STOPLIGHT",
+      "name": "STOPLIGHT",
       "platform": "PLATFORM"
     }
   },
   "report": {
     "snapshot": {
-      "title": "Stoplights Taken Report",
+      "title": "Snapshots Report",
       "search": {
         "date-from": "Date From",
         "date-to": "Date To",
@@ -398,7 +398,7 @@
       },
       "buttons": {
         "export": "Download Report",
-        "download-csv": "Download CSV"
+        "download-csv": "Download CSV Report"
       },
       "status": "Status",
       "survey": "Survey",
